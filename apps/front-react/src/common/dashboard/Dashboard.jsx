@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
-import { Outlet, NavLink, useNavigate } from "react-router-dom";
-import { FaUserCircle, FaWrench, FaUsers } from "react-icons/fa";
-import { AXIOS } from "../../app/axios-http";
-import Spinner from "../generic/spinner/Spinner";
+//import { Outlet, NavLink, useNavigate } from "react-router-dom";
+//import { FaUserCircle, FaWrench, FaUsers } from "react-icons/fa";
+//import { AXIOS } from "../../app/axios-http";
+//import Spinner from "../generic/spinner/Spinner";
+import Sidebar from "../generic/sidebar/Sidebar";
 
 export default function Dashboard() {
-  let [isRequesting, setIsRequesting] = useState(false);
+  return(
+    <Sidebar />
+  );
+}
+
+  /*let [isRequesting, setIsRequesting] = useState(false);
   let navigate = useNavigate();
 
   const initialStateProfil = {
@@ -76,5 +82,4 @@ export default function Dashboard() {
         {isRequesting ? <Spinner /> : <Outlet />}
       </div>
     </div>
-  );
-}
+  );*/

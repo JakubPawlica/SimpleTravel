@@ -21,10 +21,6 @@ export default function IndexRoutes() {
     <div id="body-content">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="signup" element={<Signup />} />
-        <Route path="login" element={<Login />} />
         <Route
           path="dashboard"
           element={
@@ -39,8 +35,6 @@ export default function IndexRoutes() {
           <Route path="settings" element={<Settings />} />
           <Route path="handle-users" element={<HandleUsers />} />
         </Route>
-        <Route path="terms-of-service" element={<TermsOfService />} />
-        <Route path="privacy-and-cookies" element={<PrivacyAndCookies />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </div>
