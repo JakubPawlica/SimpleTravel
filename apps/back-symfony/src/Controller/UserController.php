@@ -9,24 +9,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
     private array $users = [
-        ['id' => 1, 'name' => 'Jan Kowalski', 'email' => 'jan@example.com'],
-        ['id' => 2, 'name' => 'Anna Nowak', 'email' => 'anna@example.com'],
+        1 => ['id' => 1, 'name' => 'Jan Kowalski', 'email' => 'jan@example.com'],
+        2 => ['id' => 2, 'name' => 'Anna Nowak', 'email' => 'anna@example.com'],
     ];
 
     #[Route('/api/users', name: 'get_users', methods: ['GET'])]
     public function getUsers(): JsonResponse
     {
-        return $this->json($users, 200);
+        return $this->json(array_values($this->users), 200);
     }
 
     #[Route('/api/users/{id}', name: 'get_user_by_id', methods: ['GET'])]
     public function getUserById(int $id): JsonResponse
     {
-        if (!array_key_exists($id, $users)) {
+        if (!array_key_exists($id, $this->users)) {
             return $this->json(['error' => 'User not found'], 404);
         }
 
-        return $this->json($users[$id], 200);
+        return $this->json($this->users[$id], 200);
     }
 
     #[Route('/api/users', name: 'create_user', methods: ['POST'])]
