@@ -46,7 +46,10 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
+
+    # 12.03 - Dodano wpis dla "api/users" do autoryzacji bez tokenu JWT
     access_control:
+        - { path: ^/api/users, roles: PUBLIC_ACCESS }
         - { path: ^/api/user/register, roles: PUBLIC_ACCESS }
         - { path: ^/api/public, roles: PUBLIC_ACCESS }
         - { path: ^/api/user, roles: ROLE_USER }
