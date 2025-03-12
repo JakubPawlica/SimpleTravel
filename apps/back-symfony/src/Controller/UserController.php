@@ -59,4 +59,15 @@ class UserController extends AbstractController
         $this->users[$id] = ['id' => $id, 'name' => $data['name'], 'email' => $data['email']];
         return $this->json($this->users[$id], 200);
     }
+
+    #[Route('/api/users/{id}', name: 'delete_user', methods: ['DELETE'])]
+    public function deleteUser(int $id): JsonResponse
+    {
+        if (!isset($this->users[$id])) {
+            return $this->json(['error' => 'User not found'], 404);
+        }
+
+        unset($this->users[$id]);
+        return $this->json(['message' => 'User deleted'], 204);
+    }
 }
