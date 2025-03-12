@@ -43,4 +43,20 @@ class UserController extends AbstractController
 
         return $this->json($newUser, 201);
     }
+
+    #[Route('/api/users/{id}', name: 'update_user', methods: ['PUT'])]
+    public function updateUser(int $id, Request $request): JsonResponse
+    {
+        if (!isset($this->users[$id])) {
+            return $this->json(['error' => 'User not found'], 404);
+        }
+
+        $data = json_decode($request->getContent(), true);
+        if (!isset($data['name'], $data['email'])) {
+            return $this->json(['error' => 'Invalid data'], 400);
+        }
+
+        $this->users[$id] = ['id' => $id, 'name' => $data['name'], 'email' => $data['email']];
+        return $this->json($this->users[$id], 200);
+    }
 }
