@@ -9,8 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class GroupController extends AbstractController
 {
     private array $groups = [
-        1 => ['id' => 1, 'name' => 'Ekipa Paryż', 'members' => [1, 2]],
-        2 => ['id' => 2, 'name' => 'Podróż do Tokio', 'members' => [2, 3]],
+        1 => ['id' => 1, 'name' => 'Ekipa Paryż', 'admin' => 1, 'members' => [1, 2]],
+        2 => ['id' => 2, 'name' => 'Podróż do Tokio', 'admin' => 2, 'members' => [2, 3]],
     ];
 
     #[Route('api/groups/{id}', name: 'get_group_by_id', methods: ['GET'])]
@@ -27,15 +27,16 @@ class GroupController extends AbstractController
     public function createGroup(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        if (!isset($data['name'])) {
-            return $this->json(['error' => 'Group name is required'], 400);
+        if (!isset($data['name'], $data['admin'])) {
+            return $this->json(['error' => 'Group name and admin are required'], 400);
         }
 
         $newId = count($this->groups) + 1;
         $newGroup = [
             'id' => $newId,
             'name' => $data['name'],
-            'members' => []
+            'admin' => $data['admin'],
+            'members' => [$data['admin']]
         ];
         $this->groups[$newId] = $newGroup;
 
@@ -59,7 +60,7 @@ class GroupController extends AbstractController
         return $this->json($this->groups[$id], 200);
     }
 
-    #[Route('/api/groups/{id}', name: 'delete_group', methods: ['DELETE'])]
+    #[Route('api/groups/{id}', name: 'delete_group', methods: ['DELETE'])]
     public function deleteGroup(int $id): JsonResponse
     {
         if (!isset($this->groups[$id])) {
@@ -71,7 +72,7 @@ class GroupController extends AbstractController
         return $this->json(['message' => 'Group deleted'], 204);
     }
 
-    #[Route('/api/groups/{id}/users/{userId}', name: 'add_user_to_group', methods: ['POST'])]
+    #[Route('api/groups/{id}/users/{userId}', name: 'add_user_to_group', methods: ['POST'])]
     public function addUserToGroup(int $id, int $userId): JsonResponse
     {
         if (!isset($this->groups[$id])) {
