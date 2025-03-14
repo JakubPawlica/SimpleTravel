@@ -70,4 +70,20 @@ class GroupController extends AbstractController
 
         return $this->json(['message' => 'Group deleted'], 204);
     }
+
+    #[Route('/api/groups/{id}/users/{userId}', name: 'add_user_to_group', methods: ['POST'])]
+    public function addUserToGroup(int $id, int $userId): JsonResponse
+    {
+        if (!isset($this->groups[$id])) {
+            return $this->json(['error' => 'Group not found'], 404);
+        }
+
+        if (in_array($userId, $this->groups[$id]['members'])) {
+            return $this->json(['error' => 'User is already in the group'], 400);
+        }
+
+        $this->groups[$id]['members'][] = $userId;
+
+        return $this->json($this->groups[$id], 200);
+    }
 }
