@@ -51,4 +51,39 @@ class TripController extends AbstractController
 
         return $this->json($newTrip, 201);
     }
+
+    #[Route('api/trips/{id}', name: 'update_trip', methods: ['PUT'])]
+    public function updateTrip(int $id, Request $request): JsonResponse
+    {
+        if(!isset($this->trips[$id])) {
+            return $this->json(['error' => 'Trip not found'], 404);
+        }
+
+        $data = json_decode($request->getContent(), true);
+        if(!isset($data['name'], $data['destination'], $data['start_date'], $data['end_date']));
+        {
+            return $this->json(['error' => 'Invalid data'], 400);
+        }
+
+        $this->trips[$id] = [
+            'id' => $id,
+            'name' => $data['name'],
+            'destination' => $data['destination'],
+            'start_date' => $data['start_date'],
+            'end_date' => $data['end_date']
+        ];
+
+        return $this->json($this->trips[$id], 201);
+    }
+
+    #[Route('/api/trips/{id}', name: 'delete_trip', methods: ['DELETE'])]
+    public function deleteTrip(int $id): JsonResponse
+    {
+        if (!isset($this->trips[$id])) {
+            return $this->json(['error' => 'Trip not found'], 404);
+        }
+
+        unset($this->trips[$id]);
+        return $this->json(['message' => 'Trip deleted'], 204);
+    }
 }
