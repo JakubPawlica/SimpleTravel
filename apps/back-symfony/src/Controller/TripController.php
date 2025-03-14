@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class TripController extends AbstractController
 {
     private array $trips = [
-        1 => ['id' => 1, 'name' => 'Wakacje w Paryżu', 'destination' => 'Francja', 'start_date' => '2024-07-10', 'end_date' => '2024-07-20'],
+        1 => ['id' => 1, 'name' => 'Wakacje w Paryzu', 'destination' => 'Francja', 'start_date' => '2024-07-10', 'end_date' => '2024-07-20'],
         2 => ['id' => 2, 'name' => 'Wyjazd do Tokio', 'destination' => 'Japonia', 'start_date' => '2024-09-01', 'end_date' => '2024-09-15'],
     ];
 
@@ -27,5 +27,28 @@ class TripController extends AbstractController
         }
 
         return $this->json($this->trips[$id], 200);
+    }
+
+    #[Route('api/trips', name: 'create_trip', methods: ['POST'])]
+    public function createTrip(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if(!isset($data['name'], $data['destination'], $data['start_date'], $data['end_date']));
+        {
+            return $this->json(['error' => 'Invalid data'], 400);
+        }
+
+        $newId = count($this->trips) + 1;
+        $newTrip = [
+            'id' => $newId,
+            'name' => $data['name'],
+            'destination' => $data['destination'],
+            'start_date' => $data['start_date'],
+            'end_date' => $data['end_date']
+        ];
+        $this->trips[$newId] = $newTrip;
+
+        return $this->json($newTrip, 201);
     }
 }
