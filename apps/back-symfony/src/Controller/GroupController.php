@@ -87,4 +87,24 @@ class GroupController extends AbstractController
 
         return $this->json($this->groups[$id], 200);
     }
+
+    #[Route('api/groups/{id}/users/{userId}', name: 'remove_user_from_group', methods: ['DELETE'])]
+    public function removeUserFromGroup(int $id, int $userId): JsonResponse
+    {
+        if (!isset($this->groups[$id])) {
+            return $this->json(['error' => 'Group not found'], 404);
+        }
+
+        if ($this->groups[$id]['admin'] === $userId) {
+            return $this->json(['error' => 'Admin cannot be removed from the group'], 400);
+        }
+
+        if (!in_array($userId, $this->groups[$id]['members'])) {
+            return $this->json(['error' => 'User is not in the group'], 400);
+        }
+
+        $this->groups[$id]['members'] = array_values(array_diff($this->groups[$id]['members'], [$userId]));
+
+        return $this->json($this->groups[$id], 200);
+    }
 }
