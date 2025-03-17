@@ -35,7 +35,7 @@ class TripController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
-        if(!isset($data['name'], $data['destination'], $data['start_date'], $data['end_date']));
+        if(!isset($data['name'], $data['destination'], $data['start_date'], $data['end_date']))
         {
             return $this->json(['error' => 'Invalid data'], 400);
         }
@@ -61,7 +61,7 @@ class TripController extends AbstractController
         }
 
         $data = json_decode($request->getContent(), true);
-        if(!isset($data['name'], $data['destination'], $data['start_date'], $data['end_date']));
+        if(!isset($data['name'], $data['destination'], $data['start_date'], $data['end_date']))
         {
             return $this->json(['error' => 'Invalid data'], 400);
         }
