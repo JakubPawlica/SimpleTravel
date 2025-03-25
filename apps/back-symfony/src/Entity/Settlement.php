@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\SettlementRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
+use App\Entity\Trip;
 
 #[ORM\Entity(repositoryClass: SettlementRepository::class)]
 class Settlement
@@ -19,14 +21,17 @@ class Settlement
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column]
-    private ?int $payerId = null;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $payer = null;
 
-    #[ORM\Column]
-    private ?int $payeeId = null;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $payee = null;
 
-    #[ORM\Column]
-    private ?int $tripId = null;
+    #[ORM\ManyToOne(targetEntity: Trip::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Trip $trip = null;
 
     public function getId(): ?int
     {
@@ -57,39 +62,36 @@ class Settlement
         return $this;
     }
 
-    public function getPayerId(): ?int
+    public function getPayer(): ?User
     {
-        return $this->payerId;
+        return $this->payer;
     }
 
-    public function setPayerId(int $payerId): static
+    public function setPayer(User $payer): static
     {
-        $this->payerId = $payerId;
-
+        $this->payer = $payer;
         return $this;
     }
 
-    public function getPayeeId(): ?int
+    public function getPayee(): ?User
     {
-        return $this->payeeId;
+        return $this->payee;
     }
 
-    public function setPayeeId(int $payeeId): static
+    public function setPayee(User $payee): static
     {
-        $this->payeeId = $payeeId;
-
+        $this->payee = $payee;
         return $this;
     }
 
-    public function getTripId(): ?int
+    public function getTrip(): ?Trip
     {
-        return $this->tripId;
+        return $this->trip;
     }
 
-    public function setTripId(int $tripId): static
+    public function setTrip(Trip $trip): static
     {
-        $this->tripId = $tripId;
-
+        $this->trip = $trip;
         return $this;
     }
 }

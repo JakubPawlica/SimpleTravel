@@ -4,6 +4,9 @@ namespace App\Entity;
 
 use App\Repository\TripMemberRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
+use App\Entity\Trip;
+use App\Entity\Role;
 
 #[ORM\Entity(repositoryClass: TripMemberRepository::class)]
 class TripMember
@@ -13,53 +16,53 @@ class TripMember
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $userId = null;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
-    #[ORM\Column]
-    private ?int $tripId = null;
+    #[ORM\ManyToOne(targetEntity: Trip::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Trip $trip = null;
 
-    #[ORM\Column]
-    private ?int $roleId = null;
+    #[ORM\ManyToOne(targetEntity: Role::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Role $role = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUserId(): ?int
+    public function getUser(): ?User
     {
-        return $this->userId;
+        return $this->user;
     }
 
-    public function setUserId(int $userId): static
+    public function setUser(User $user): static
     {
-        $this->userId = $userId;
-
+        $this->user = $user;
         return $this;
     }
 
-    public function getTripId(): ?int
+    public function getTrip(): ?Trip
     {
-        return $this->tripId;
+        return $this->trip;
     }
 
-    public function setTripId(int $tripId): static
+    public function setTrip(Trip $trip): static
     {
-        $this->tripId = $tripId;
-
+        $this->trip = $trip;
         return $this;
     }
 
-    public function getRoleId(): ?int
+    public function getRole(): ?Role
     {
-        return $this->roleId;
+        return $this->role;
     }
 
-    public function setRoleId(int $roleId): static
+    public function setRole(Role $role): static
     {
-        $this->roleId = $roleId;
-
+        $this->role = $role;
         return $this;
     }
 }
