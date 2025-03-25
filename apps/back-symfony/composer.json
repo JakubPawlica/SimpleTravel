@@ -12,7 +12,7 @@
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
-        "doctrine/doctrine-migrations-bundle": "^3.2",
+        "doctrine/doctrine-migrations-bundle": "^3.4",
         "doctrine/orm": "^2.13",
         "fzaninotto/faker": "^1.5",
         "gedmo/doctrine-extensions": "^3.9",
@@ -37,7 +37,6 @@
         "symfony/http-client": "6.0.*",
         "symfony/intl": "6.0.*",
         "symfony/mailer": "6.0.*",
-        "symfony/maker-bundle": "^1.0",
         "symfony/mime": "6.0.*",
         "symfony/monolog-bundle": "^3.0",
         "symfony/notifier": "6.0.*",
@@ -111,5 +110,8 @@
             "allow-contrib": false,
             "require": "6.0.*"
         }
+    },
+    "require-dev": {
+        "symfony/maker-bundle": "^1.36"
     }
 }
