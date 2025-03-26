@@ -3,6 +3,7 @@ import './Login.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../../context/useAuth";
 import { useEffect } from "react";
+import { toast } from 'react-toastify';
 import googleLogo from '../../../assets/google-icon.png';
 
 function Login() {
@@ -44,13 +45,15 @@ function Login() {
         });
         const user = await me.json();
         login(user);
+        toast.success('✈️ Poprawnie zalogowano!');
         navigate('/dashboard');
       } else {
-        alert(result.error || 'Niepoprawne dane logowania');
+        toast.error(result.error || 'Niepoprawne dane logowania');
+        setFormData({ email: '', password: '' });
       }
     } catch (err) {
       console.error('Błąd przy logowaniu:', err);
-      alert('Błąd połączenia z serwerem');
+      toast.error('Błąd połączenia z serwerem');
     }
   };
 

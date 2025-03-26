@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../../context/useAuth";
 import { useEffect } from "react";
+import { toast } from 'react-toastify';
 import "./Signup.css";
 import googleLogo from '../../../assets/google-icon.png';
 
@@ -25,6 +26,12 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (formData.password.length < 3) {
+      toast.warning('Hasło musi mieć minimum 3 znaki');
+      setFormData({ password: '' });
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:8080/api/register', {
         method: 'POST',
@@ -39,24 +46,18 @@ function Signup() {
         })
       });
   
-      let result;
-      try {
-        result = await response.json();
-      } catch {
-        result = { message: 'Zarejestrowano (brak danych JSON)' };
-      }
-      console.log('Rejestracja - wynik z backendu:', result);
-      //const result = await response.json();
+      const result = await response.json();
   
       if (response.ok) {
-        console.log('Zarejestrowano:', result);
+        toast.success('✈️ Rejestracja przebiegła pomyślnie!');
         navigate('/login');
       } else {
-        alert(result.error || 'Coś poszło nie tak przy rejestracji');
+        toast.error(result.error || 'Coś poszło nie tak przy rejestracji');
+        setFormData({ email: '' });
       }
     } catch (err) {
       console.error('Błąd przy rejestracji:', err);
-      alert('Błąd połączenia z serwerem');
+      toast.error('Błąd połączenia z serwerem');
     }
   };
 

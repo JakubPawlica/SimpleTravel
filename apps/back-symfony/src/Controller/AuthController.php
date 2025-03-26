@@ -25,7 +25,7 @@ class AuthController extends AbstractController
             }
     
             if ($userRepository->findOneBy(['email' => $data['email']])) {
-                return $this->json(['error' => 'Email already taken'], 409);
+                return $this->json(['error' => 'Podany email jest już zajęty'], 409);
             }
     
             $user = new User();
@@ -53,7 +53,7 @@ class AuthController extends AbstractController
 
         $user = $userRepository->findOneBy(['email' => $data['email']]);
         if (!$user || !password_verify($data['password'], $user->getPasswordHash())) {
-            return $this->json(['error' => 'Invalid credentials'], 401);
+            return $this->json(['error' => 'Niepoprawne dane logowania'], 401);
         }
 
         $session->set('user_id', $user->getId());
