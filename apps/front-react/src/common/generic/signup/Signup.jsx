@@ -1,118 +1,37 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./Signup.css";
-import { AXIOS } from "../../../app/axios-http";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { login } from "../../../features/auth/authSlice";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import googleLogo from '../../../assets/google-icon.png';
 
-export default function Signup() {
-  const initialFormLogin = {
-    email: "",
-    password: "",
+function Signup() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  let [isRequesting, setRequesting] = useState(false);
-  let [formLogin, setFormLogin] = useState(initialFormLogin);
-  let navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const id = toast.loading("Please wait...");
-    setRequesting(true);
-    AXIOS.post("/user/register", formLogin)
-      .then((response) => {
-        toast.update(id, {
-          render: "Signup successfully !",
-          type: "success",
-          isLoading: false,
-          autoClose: 3000,
-          closeOnClick: true,
-        });
-        //get token from response
-        const token = response.data.token;
-
-        dispatch(login(token));
-
-        //redirect user to home page
-        navigate("/");
-      })
-      .catch((err) => {
-        toast.update(id, {
-          render: err.response.data.message,
-          type: "error",
-          isLoading: false,
-          autoClose: 3000,
-          closeOnClick: true,
-        });
-        console.log(err);
-      })
-      .finally(() => setRequesting(false));
-  };
-
-  const handleFormLogin = (key, value) => {
-    setFormLogin({ ...formLogin, [key]: value });
+    console.log('Zarejestrowano:', formData);
+    // Tu można dodać logikę API
   };
 
   return (
-    <Container>
-      <Row className="justify-content-center">
-        <Col md={6}>
-          <div>
-            <h2>Signup</h2>
-          </div>
-          <Form>
-            <Form.Group>
-              <Form.Label htmlFor="register-email">Email address</Form.Label>
-              <Form.Control
-                type="email"
-                className="form-control"
-                id="register-email"
-                aria-describedby="register-email-help"
-                placeholder="Enter email"
-                onChange={(e) => handleFormLogin("email", e.target.value)}
-                value={formLogin.email}
-              />
-              <small id="register-email-help" className="form-text text-muted">
-                user@gmail.com
-              </small>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label htmlFor="register-password">Password</Form.Label>
-              <Form.Control
-                type="password"
-                autoComplete="on"
-                className="form-control"
-                id="register-password"
-                aria-describedby="register-password-help"
-                placeholder="Password"
-                onChange={(e) => handleFormLogin("password", e.target.value)}
-                value={formLogin.password}
-              />
-              <small
-                id="register-password-help"
-                className="form-text text-muted"
-              >
-                user
-              </small>
-            </Form.Group>
-            <Button
-              type="submit"
-              onClick={(e) => handleSubmit(e)}
-              disabled={isRequesting}
-              size="sm"
-            >
-              Submit
-            </Button>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+    <div className="entry-form">
+      <div className="home-logo"><span className="material-symbols-outlined">travel</span><span className="simple">Simple</span><span className="travel">Travel</span></div>
+      <form onSubmit={handleSubmit}>
+        <input name="username" placeholder="Nazwa użytkownika" value={formData.username} onChange={handleChange} required /><br /><br />
+        <input name="email" placeholder="Email" type="email" value={formData.email} onChange={handleChange} required /><br /><br />
+        <input name="password" placeholder="Hasło" type="password" value={formData.password} onChange={handleChange} required /><br /><br />
+        <button type="submit">Zarejestruj się</button>
+      </form>
+      <br />
+      <p>Masz już konto?<button onClick={() => navigate('/login')}>Zaloguj się</button></p>
+      <p>────── albo ──────</p>
+      <button className="button-signup-google"><img className="google-logo" src={googleLogo} alt="Logo Google"/> Zarejestruj się z Google</button>
+    </div>
   );
 }
+
+export default Signup;

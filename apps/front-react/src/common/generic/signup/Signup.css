@@ -1,0 +1,93 @@
+#body-content {
+  background-image: url('../../../assets/loginPageBg.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+
+.entry-form {
+  margin-top: 7vw;
+  background-color: white;
+  padding: 50px 50px 50px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+/*.entry-form > h2 {
+  font-family: Poppins;
+  font-size: 30px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  color: black;
+}*/
+
+.entry-form > form {
+  margin-top: 40px;
+}
+
+.entry-form > form > input{
+  padding: 10px;
+  font-family: Poppins;
+  font-size: 20px;
+  border-radius: 5px;
+  border: 2px solid rgba(219, 219, 219, 0.744);
+}
+
+.entry-form > form > button {
+  font-family: Poppins;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 276px;
+  height: 54px;
+  background-color: rgb(119 170 246);
+}
+
+.entry-form > p {
+  font-family: Poppins;
+  color: rgb(162, 162, 162);
+}
+
+.entry-form > p > button {
+  font-family: Poppins;
+  margin-left: 5px;
+  border: none;
+  background-color: transparent;
+  color: rgb(119 170 246);
+}
+
+.button-signup-google {
+  font-family: Poppins;
+  color: rgb(0, 0, 0);
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 276px;
+  height: 44px;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+}
+
+.google-logo {
+  width: 20px;
+}
+
+/* TABLET and MOBILE */
+@media (max-width: 1024px) {
+  #body-content {
+    align-items: center;
+  }
+  
+  .entry-form {
+    margin-top: 0;
+  }
+}
