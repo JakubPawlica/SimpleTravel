@@ -11,10 +11,35 @@ function Signup() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Zarejestrowano:', formData);
-    // Tu można dodać logikę API
+
+    try {
+      const response = await fetch('http://localhost:8080/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          name: formData.username,
+          email: formData.email,
+          password: formData.password
+        })
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        console.log('Zarejestrowano:', result);
+        navigate('/login');
+      } else {
+        alert(result.error || 'Coś poszło nie tak przy rejestracji');
+      }
+    } catch (err) {
+      console.error('Błąd przy rejestracji:', err);
+      alert('Błąd połączenia z serwerem');
+    }
   };
 
   return (

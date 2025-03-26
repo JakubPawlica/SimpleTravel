@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css'; 
+import { useAuth } from "../../../context/useAuth";
 import googleLogo from '../../../assets/google-icon.png';
 
 function Login() {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: '', password: '' });
 
@@ -11,10 +13,35 @@ function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Zalogowano:', formData);
-    // Tu możesz dodać żądanie do API do logowania
+
+    try {
+      const response = await fetch('http://localhost:8080/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(formData)
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        const me = await fetch('http://localhost:8080/api/me', {
+          credentials: 'include',
+        });
+        const user = await me.json();
+        login(user);
+        navigate('/dashboard');
+      } else {
+        alert(result.error || 'Niepoprawne dane logowania');
+      }
+    } catch (err) {
+      console.error('Błąd przy logowaniu:', err);
+      alert('Błąd połączenia z serwerem');
+    }
   };
 
   return (

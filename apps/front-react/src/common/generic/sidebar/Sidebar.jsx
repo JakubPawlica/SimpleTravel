@@ -7,16 +7,20 @@ import { IoMdChatbubbles } from "react-icons/io";
 import { MdOutlineTravelExplore } from "react-icons/md";
 import { MdAttachMoney } from "react-icons/md";
 import { AiFillHome } from "react-icons/ai";
+import { useAuth } from "../../../context/useAuth";
+import { useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 
 export default function Sidebar() {
+
+  const { logout, user } = useAuth();
+  const navigate = useNavigate();
+
   return (
     <aside className="sidebar">
-      {/* Nagłówek sidebara z logo */}
       <div className="sidebar-header">
         <div className="home-logo"><span className="material-symbols-outlined">travel</span><span className="simple">Simple</span><span className="travel">Travel</span></div>
       </div>
-      {/* Menu nawigacyjne */}
       <nav className="sidebar-nav">
         <NavLink
           to="/dashboard"
@@ -82,6 +86,18 @@ export default function Sidebar() {
           Rozliczenia
         </NavLink>
       </nav>
+
+      {user && (
+      <div className="sidebar-logout">
+        <button className="logout-button" onClick={() => {
+          logout();
+          navigate("/login");
+        }}>
+          Wyloguj się
+        </button>
+      </div>
+      )}
+
     </aside>
   );
 }

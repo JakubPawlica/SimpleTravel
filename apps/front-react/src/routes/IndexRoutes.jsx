@@ -11,9 +11,8 @@ import Settings from "../common/generic/settings/Settings";
 import HandleUsers from "../common/generic/admin/handle-users/HandleUsers";
 
 export default function IndexRoutes() {
-  const { isAuthenticated } = useSelector((state) => state.auth);
-
-  //trzeba dodać blokadę wejścia na dashboard i zakładki bez logowania (usunąłem na chwilę)
+  const { isAuthenticated, loading } = useAuth();
+  if (loading) return <p>Ładowanie sesji...</p>;
 
   return (
     <div id="body-content">
@@ -21,10 +20,22 @@ export default function IndexRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
-        <Route path="dashboard" element={<Dashboard/>} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="settings" element={<Settings />} />
-        <Route path="handle-users" element={<HandleUsers />} />
+        <Route
+          path="dashboard"
+          element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="profile"
+          element={isAuthenticated ? <Profile /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="settings"
+          element={isAuthenticated ? <Settings /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="handle-users"
+          element={isAuthenticated ? <HandleUsers /> : <Navigate to="/login" />}
+        />
         <Route path="*" element={<Error />} />
       </Routes>
     </div>
