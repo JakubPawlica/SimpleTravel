@@ -9,6 +9,7 @@ import { MdAttachMoney } from "react-icons/md";
 import { AiFillHome } from "react-icons/ai";
 import { useAuth } from "../../../context/useAuth";
 import { useNavigate } from "react-router-dom";
+import { TbLogout } from "react-icons/tb";
 import "./Sidebar.css";
 
 export default function Sidebar() {
@@ -93,7 +94,7 @@ export default function Sidebar() {
           logout();
           navigate("/login");
         }}>
-          Wyloguj się
+          <TbLogout /><p>Wyloguj</p>
         </button>
       </div>
       )}

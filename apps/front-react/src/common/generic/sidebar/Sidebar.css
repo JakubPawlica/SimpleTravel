@@ -76,3 +76,27 @@
   height: 24px;
   flex-shrink: 0;
 }
+
+.logout-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: rgb(119 170 246);
+  border: none;
+  background-color: transparent;
+  font-size: 50px;
+  transition: 0.5s;
+}
+
+.logout-button > p {
+  margin: 0;
+  color: rgb(119 170 246);
+  font-size: 18px;
+}
+
+.logout-button:hover {
+  transition: 0.5s;
+  color: rgb(14, 105, 241);
+}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -17,25 +18,29 @@ class AuthController extends AbstractController
     #[Route('/api/register', name: 'register', methods: ['POST'])]
     public function register(Request $request, EntityManagerInterface $em, UserRepository $userRepository): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
-        if (!isset($data['name'], $data['email'], $data['password'])) {
-            return $this->json(['error' => 'Invalid data'], 400);
+        try {
+            $data = json_decode($request->getContent(), true);
+            if (!isset($data['name'], $data['email'], $data['password'])) {
+                return $this->json(['error' => 'Invalid data'], 400);
+            }
+    
+            if ($userRepository->findOneBy(['email' => $data['email']])) {
+                return $this->json(['error' => 'Email already taken'], 409);
+            }
+    
+            $user = new User();
+            $user->setName($data['name']);
+            $user->setEmail($data['email']);
+            $user->setPasswordHash(password_hash($data['password'], PASSWORD_DEFAULT));
+            $user->setSessionToken(bin2hex(random_bytes(32)));
+    
+            $em->persist($user);
+            $em->flush();
+    
+            return $this->json(['message' => 'User registered'], 201);
+        } catch (\Throwable $e) {
+            return $this->json(['error' => $e->getMessage()], 500);
         }
-
-        if ($userRepository->findOneBy(['email' => $data['email']])) {
-            return $this->json(['error' => 'Email already taken'], 409);
-        }
-
-        $user = new User();
-        $user->setName($data['name']);
-        $user->setEmail($data['email']);
-        $user->setPasswordHash(password_hash($data['password'], PASSWORD_DEFAULT));
-        $user->setSessionToken(bin2hex(random_bytes(32)));
-
-        $em->persist($user);
-        $em->flush();
-
-        return $this->json(['message' => 'User registered'], 201);
     }
 
     #[Route('/api/login', name: 'login', methods: ['POST'])]
@@ -67,7 +72,7 @@ class AuthController extends AbstractController
     public function me(SessionInterface $session, UserRepository $userRepository): JsonResponse
     {
         $userId = $session->get('user_id');
-        
+
         if (!$userId) {
             return $this->json(['error' => 'Not logged in'], 401);
         }

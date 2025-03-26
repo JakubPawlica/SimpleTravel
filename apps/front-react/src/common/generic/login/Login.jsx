@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './Login.css'; 
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../../context/useAuth";
+import { useEffect } from "react";
 import googleLogo from '../../../assets/google-icon.png';
 
 function Login() {
+
+  const { isAuthenticated } = useAuth();
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated, navigate]);
+
   const [formData, setFormData] = useState({ email: '', password: '' });
 
   const handleChange = (e) => {

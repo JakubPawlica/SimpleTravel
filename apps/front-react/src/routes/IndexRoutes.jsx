@@ -9,10 +9,11 @@ import Signup from "../common/generic/signup/Signup";
 import Profile from "../common/generic/profile/Profile";
 import Settings from "../common/generic/settings/Settings";
 import HandleUsers from "../common/generic/admin/handle-users/HandleUsers";
+import { useAuth } from "../context/useAuth";
 
 export default function IndexRoutes() {
   const { isAuthenticated, loading } = useAuth();
-  if (loading) return <p>Ładowanie sesji...</p>;
+  if (loading) return <p>SimpleTravel - Ładowanie sesji...</p>;
 
   return (
     <div id="body-content">

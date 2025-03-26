@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../../../context/useAuth";
+import { useEffect } from "react";
 import "./Signup.css";
 import googleLogo from '../../../assets/google-icon.png';
 
 function Signup() {
+
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated, navigate]);
+
   const [formData, setFormData] = useState({ username: '', email: '', password: '' });
 
   const handleChange = (e) => {
@@ -28,7 +39,14 @@ function Signup() {
         })
       });
   
-      const result = await response.json();
+      let result;
+      try {
+        result = await response.json();
+      } catch {
+        result = { message: 'Zarejestrowano (brak danych JSON)' };
+      }
+      console.log('Rejestracja - wynik z backendu:', result);
+      //const result = await response.json();
   
       if (response.ok) {
         console.log('Zarejestrowano:', result);
