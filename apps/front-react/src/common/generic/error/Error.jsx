@@ -11,12 +11,12 @@ export default function Error() {
     <div className="container ">
       <div className="row justify-content-center">
         <div>
-          <h1>Error 404: Page not found</h1>
+          <h1>Error 404: Nie udało się znaleźć strony</h1>
         </div>
         <div>
           <Button size="sm" onClick={() => navigate("/")}>
             <FaHouseUser className="mr-1" />
-            Go Home
+            Powrót do SimpleTravel
           </Button>
         </div>
       </div>

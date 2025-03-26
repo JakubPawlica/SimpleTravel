@@ -40,6 +40,10 @@
   border: 2px solid rgba(219, 219, 219, 0.744);
 }
 
+.entry-form > form > input:focus {
+  border: 2px solid rgb(119 170 246);
+}
+
 .entry-form > form > button {
   font-family: Poppins;
   color: white;

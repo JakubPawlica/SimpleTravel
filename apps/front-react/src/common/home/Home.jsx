@@ -30,7 +30,7 @@ export default function Home() {
           <p className="hero-subtitle">
             <p>Zarządzaj, planuj, bądź na bieżąco z wydatkami - wszystko w jednym miejscu.</p><p>Wyrusz w swoją nową podróż wraz z SimpleTravel.</p>
           </p>
-          <NavLink to="/explore" className="hero-cta-button">
+          <NavLink to="/login" className="hero-cta-button">
             Rozpocznij
           </NavLink>
         </div>
