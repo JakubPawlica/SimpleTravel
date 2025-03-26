@@ -18,17 +18,19 @@ function Login() {
   };
 
   return (
-    <div className="entry-form">
-      <div className="home-logo"><span className="material-symbols-outlined">travel</span><span className="simple">Simple</span><span className="travel">Travel</span></div>
-      <form onSubmit={handleSubmit}>
-        <input name="email" placeholder="Email" type="email" value={formData.email} onChange={handleChange} required/><br /><br />
-        <input name="password" placeholder="Hasło" type="password" value={formData.password} onChange={handleChange} required/><br /><br />
-        <button type="submit">Zaloguj się</button>
-      </form>
-      <br />
-      <p>Nie masz konta?<button onClick={() => navigate('/signup')}>Zarejestruj się</button></p>
-      <p>────── albo ──────</p>
-      <button className="button-signup-google"><img className="google-logo" src={googleLogo} alt="Logo Google"/> Zaloguj się z Google</button>
+    <div className="login-background">
+      <div className="entry-form">
+        <div className="home-logo"><span className="material-symbols-outlined">travel</span><span className="simple">Simple</span><span className="travel">Travel</span></div>
+        <form onSubmit={handleSubmit}>
+          <input name="email" placeholder="Email" type="email" value={formData.email} onChange={handleChange} required/><br /><br />
+          <input name="password" placeholder="Hasło" type="password" value={formData.password} onChange={handleChange} required/><br /><br />
+          <button type="submit">Zaloguj się</button>
+        </form>
+        <br />
+        <p>Nie masz konta?<button onClick={() => navigate('/signup')}>Zarejestruj się</button></p>
+        <p>────── albo ──────</p>
+        <button className="button-signup-google"><img className="google-logo" src={googleLogo} alt="Logo Google"/> Zaloguj się z Google</button>
+      </div>
     </div>
   );
 }

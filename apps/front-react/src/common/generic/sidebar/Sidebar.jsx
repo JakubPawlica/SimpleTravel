@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FaPlaneDeparture } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { IoIosCreate } from "react-icons/io";
 import { FaCalendarAlt } from "react-icons/fa";
@@ -15,13 +14,12 @@ export default function Sidebar() {
     <aside className="sidebar">
       {/* Nagłówek sidebara z logo */}
       <div className="sidebar-header">
-        <FaPlaneDeparture />
-        <h1 className="logo">SimpleTravel</h1>
+        <div className="home-logo"><span className="material-symbols-outlined">travel</span><span className="simple">Simple</span><span className="travel">Travel</span></div>
       </div>
       {/* Menu nawigacyjne */}
       <nav className="sidebar-nav">
         <NavLink
-          to="/home"
+          to="/dashboard"
           className={({ isActive }) =>
             isActive ? "sidebar-link active" : "sidebar-link"
           }

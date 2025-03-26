@@ -18,18 +18,20 @@ function Signup() {
   };
 
   return (
-    <div className="entry-form">
-      <div className="home-logo"><span className="material-symbols-outlined">travel</span><span className="simple">Simple</span><span className="travel">Travel</span></div>
-      <form onSubmit={handleSubmit}>
-        <input name="username" placeholder="Nazwa użytkownika" value={formData.username} onChange={handleChange} required /><br /><br />
-        <input name="email" placeholder="Email" type="email" value={formData.email} onChange={handleChange} required /><br /><br />
-        <input name="password" placeholder="Hasło" type="password" value={formData.password} onChange={handleChange} required /><br /><br />
-        <button type="submit">Zarejestruj się</button>
-      </form>
-      <br />
-      <p>Masz już konto?<button onClick={() => navigate('/login')}>Zaloguj się</button></p>
-      <p>────── albo ──────</p>
-      <button className="button-signup-google"><img className="google-logo" src={googleLogo} alt="Logo Google"/> Zarejestruj się z Google</button>
+    <div className="signup-background">
+      <div className="entry-form">
+        <div className="home-logo"><span className="material-symbols-outlined">travel</span><span className="simple">Simple</span><span className="travel">Travel</span></div>
+        <form onSubmit={handleSubmit}>
+          <input name="username" placeholder="Nazwa użytkownika" value={formData.username} onChange={handleChange} required /><br /><br />
+          <input name="email" placeholder="Email" type="email" value={formData.email} onChange={handleChange} required /><br /><br />
+          <input name="password" placeholder="Hasło" type="password" value={formData.password} onChange={handleChange} required /><br /><br />
+          <button type="submit">Zarejestruj się</button>
+        </form>
+        <br />
+        <p>Masz już konto?<button onClick={() => navigate('/login')}>Zaloguj się</button></p>
+        <p>────── albo ──────</p>
+        <button className="button-signup-google"><img className="google-logo" src={googleLogo} alt="Logo Google"/> Zarejestruj się z Google</button>
+      </div>
     </div>
   );
 }

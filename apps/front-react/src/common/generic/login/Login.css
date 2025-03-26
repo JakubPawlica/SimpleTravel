@@ -1,4 +1,6 @@
-#body-content {
+.login-background {
+  min-height: 100vh;
+  width: 100%;
   background-image: url('../../../assets/loginPageBg.png');
   background-position: center;
   background-repeat: no-repeat;
@@ -89,7 +91,7 @@
 
 /* TABLET and MOBILE */
 @media (max-width: 1024px) {
-  #body-content {
+  .login-background {
     align-items: center;
   }
   

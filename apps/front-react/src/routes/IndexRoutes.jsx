@@ -13,26 +13,18 @@ import HandleUsers from "../common/generic/admin/handle-users/HandleUsers";
 export default function IndexRoutes() {
   const { isAuthenticated } = useSelector((state) => state.auth);
 
+  //trzeba dodać blokadę wejścia na dashboard i zakładki bez logowania (usunąłem na chwilę)
+
   return (
     <div id="body-content">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
-        <Route
-          path="dashboard"
-          element={
-            isAuthenticated ? (
-              <Dashboard />
-            ) : (
-              <Navigate to="/" state="From Dashboard" />
-            )
-          }
-        >
-          <Route path="profile" element={<Profile />} />
-          <Route path="settings" element={<Settings />} />
-          <Route path="handle-users" element={<HandleUsers />} />
-        </Route>
+        <Route path="dashboard" element={<Dashboard/>} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="settings" element={<Settings />} />
+        <Route path="handle-users" element={<HandleUsers />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </div>

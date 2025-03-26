@@ -1,20 +1,24 @@
 /* Główny kontener sidebara */
+
+* {
+  font-family: Poppins;
+}
+
 .sidebar {
   width: 350px;
   height: 100vh;
-  background-color: #ffffff; /* jasnoniebieskie tło */
-  color: #0d47a1; /* ciemny niebieski tekst */
+  background-color: #ffffff;
+  color: #0d47a1;
   display: flex;
   flex-direction: column;
-  position: fixed;
   top: 0;
   left: 0;
   padding: 20px;
   box-sizing: border-box;
   border-right: 1px solid rgb(229, 229, 229);
+  flex-shrink: 0;
 }
 
-/* Nagłówek sidebara z logo */
 .sidebar-header {
   margin-bottom: 60px;
   font-size: 1.8rem;
@@ -32,23 +36,20 @@
   margin-left: 10px;
 }
 
-/* Nawigacja – lista linków */
 .sidebar-nav {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 25px;
-  /* usuwamy centrowanie tekstu, aby zawartość była wyrównana do lewej */
 }
 
-/* Styl linku – blok z ikoną i tekstem wyrównanymi do lewej */
 .sidebar-link {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  gap: 10px; /* odstęp między ikoną a tekstem */
-  color: #1565c0;
+  gap: 10px;
+  color: rgb(119 170 246);
   text-decoration: none;
   font-size: 1.1rem;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -59,32 +60,19 @@
 }
 
 .sidebar-link:hover {
-  background-color: #90caf9;
-  color: #0d47a1;
+  transition: 0.2s;
+  background-color: rgb(119 170 246);
+  color: #ffffff;
   text-decoration: none;
 }
 
 .sidebar-link.active {
-  background-color: #90caf9;
-  color: #0d47a1;
-  font-weight: bold;
+  background-color: rgb(119 170 246);
+  color: #ffffff;
 }
 
-/* Upewnij się, że wszystkie ikony mają stały rozmiar */
 .sidebar-link svg {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
-}
-
-/* Stopka sidebara – np. dane użytkownika */
-.sidebar-footer {
-  margin-top: auto;
-  padding-top: 20px;
-  border-top: 1px solid #90caf9;
-}
-
-.sidebar-user {
-  font-size: 1rem;
-  color: #1565c0;
 }
