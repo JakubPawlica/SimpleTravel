@@ -38,3 +38,12 @@ div {
   display: flex;
 }
 
+.Toastify__toast--success svg {
+  fill: rgb(0, 140, 255) !important;
+}
+
+.Toastify__progress-bar--success {
+  background: rgb(0, 140, 255) !important;
+}
+
+
