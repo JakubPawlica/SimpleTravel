@@ -1,0 +1,113 @@
+.create-trip-multistep {
+  background: #fff;
+  max-width: 100%;
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.create-trip-multistep > h2 {
+  margin-bottom: 70px;
+}
+
+/* === Progress Bar === */
+.create-trip-multistep__progress {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1rem;
+}
+
+.create-trip-multistep__step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #999;
+  flex: 1;
+}
+
+.create-trip-multistep__step-indicator.active {
+  color: #007bff;
+}
+
+.create-trip-multistep__step-indicator.done {
+  color: #2ecc71;
+}
+
+.create-trip-multistep__circle {
+  background: #e3e3e3;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.create-trip-multistep__step-indicator.active .create-trip-multistep__circle {
+  background: #007bff;
+  color: white;
+}
+
+.create-trip-multistep__step-indicator.done .create-trip-multistep__circle {
+  background: #2ecc71;
+  color: white;
+}
+
+/* === Form === */
+.create-trip-multistep__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.create-trip-multistep__step label {
+  margin-bottom: 5px;
+  font-weight: 500;
+  display: block;
+}
+
+.create-trip-multistep__step input,
+.create-trip-multistep__step textarea {
+  padding: 0.7rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.create-trip-multistep__controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.create-trip-multistep__button {
+  padding: 0.8rem 1.4rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.create-trip-multistep__button:hover {
+  background-color: #0056b3;
+}
+
+.create-trip-multistep__step-info {
+  text-align: left;
+}
+
+.create-trip-multistep__step-info > p {
+  margin: 0;
+}
+
+.plant-icon {
+  color: green;
+  font-size: 55px;
+  margin-right: 15px;
+}

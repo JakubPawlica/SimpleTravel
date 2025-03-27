@@ -26,6 +26,7 @@ export default function Sidebar() {
       <nav className="sidebar-nav">
         <NavLink
           to="/dashboard"
+          end
           className={({ isActive }) =>
             isActive ? "sidebar-link active" : "sidebar-link"
           }
@@ -34,7 +35,7 @@ export default function Sidebar() {
           Strona główna
         </NavLink>
         <NavLink
-          to="/profile"
+          to="/dashboard/profile"
           className={({ isActive }) =>
             isActive ? "sidebar-link active" : "sidebar-link"
           }
@@ -43,7 +44,7 @@ export default function Sidebar() {
           Profil
         </NavLink>
         <NavLink
-          to="/plan-journey"
+          to="/dashboard/plan-journey"
           className={({ isActive }) =>
             isActive ? "sidebar-link active" : "sidebar-link"
           }
@@ -52,7 +53,7 @@ export default function Sidebar() {
           Planuj podróż
         </NavLink>
         <NavLink
-          to="/schedule"
+          to="/dashboard/schedule"
           className={({ isActive }) =>
             isActive ? "sidebar-link active" : "sidebar-link"
           }
@@ -61,7 +62,7 @@ export default function Sidebar() {
           Terminarz
         </NavLink>
         <NavLink
-          to="/chats"
+          to="/dashboard/chats"
           className={({ isActive }) =>
             isActive ? "sidebar-link active" : "sidebar-link"
           }
@@ -70,7 +71,7 @@ export default function Sidebar() {
           Moje rozmowy
         </NavLink>
         <NavLink
-          to="/trips"
+          to="/dashboard/trips"
           className={({ isActive }) =>
             isActive ? "sidebar-link active" : "sidebar-link"
           }
@@ -79,7 +80,7 @@ export default function Sidebar() {
           Moje podróże
         </NavLink>
         <NavLink
-          to="/billing"
+          to="/dashboard/billing"
           className={({ isActive }) =>
             isActive ? "sidebar-link active" : "sidebar-link"
           }

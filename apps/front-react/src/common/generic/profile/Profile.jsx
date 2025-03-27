@@ -1,38 +1,20 @@
 import React from "react";
+import { useAuth } from "../../../context/useAuth";
+import { FaRegUser } from "react-icons/fa";
 import "./Profile.css";
-import { useLocation } from "react-router-dom";
 
 export default function Profile() {
-  const location = useLocation();
-  const { profile } = location.state;
+  const { user } = useAuth();
+
+  if (!user) return <p>Brak danych użytkownika.</p>;
 
   return (
-    <div className="">
-      <h2>Profile</h2>
-      <table className="table table-striped table-sm">
-        <thead>
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Email</th>
-            <th scope="col">UserIdentifier</th>
-            <th scope="col">Roles</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th className="align-middle" scope="row">
-              {profile.id}
-            </th>
-            <td className="align-middle">{profile.email}</td>
-            <td className="align-middle">{profile.userIdentifier}</td>
-            <td className="align-middle">
-              {profile.roles.map((role, indexRole) => {
-                return <div key={indexRole}>{role}</div>;
-              })}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div className="profile-container">
+      <h2><FaRegUser className="user-icon"/> Twój profil</h2>
+      <div className="profile-card">
+        <p><strong>Imię:</strong> {user.name}</p>
+        <p><strong>Email:</strong> {user.email}</p>
+      </div>
     </div>
   );
 }

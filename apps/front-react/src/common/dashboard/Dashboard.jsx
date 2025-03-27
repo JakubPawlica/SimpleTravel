@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import Sidebar from "../generic/sidebar/Sidebar";
-import Center from "../generic/center/Center";
+import { Outlet } from "react-router-dom";
 
 export default function Dashboard() {
   return(
     <div className="dashboard">
       <Sidebar />
-      <Center />
+      <main className="dashboard-content">
+        <Outlet />
+      </main>
     </div>
   );
 }

@@ -1,0 +1,26 @@
+.profile-container {
+  width: 100%;
+  margin: 0 auto;
+  background: #f7f9fc;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.profile-container > h2 {
+  margin-bottom: 45px;
+}
+
+.profile-card p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.profile-card strong {
+  color: #007bff;
+}
+
+.user-icon {
+  font-size: 45px;
+  margin-right: 10px;
+}

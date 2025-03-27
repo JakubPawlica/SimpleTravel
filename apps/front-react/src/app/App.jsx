@@ -13,7 +13,7 @@ export default function App() {
       <AuthProvider>
         <div id="app-content">
           <IndexRoutes />
-          <ToastContainer autoClose={3000} position="bottom-center" toastClassName="toast-large"/>
+          <ToastContainer autoClose={3000} position="top-right" toastClassName="toast-large"/>
         </div>
       </AuthProvider>
     </BrowserRouter>

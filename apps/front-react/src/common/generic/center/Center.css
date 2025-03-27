@@ -1,11 +1,5 @@
-.center {
-  flex-grow: 1;
-  background-color: #f5f5f5;
-  padding: 80px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1vw;
+* {
+  font-family: Poppins;
 }
 
 .center > h1 {
