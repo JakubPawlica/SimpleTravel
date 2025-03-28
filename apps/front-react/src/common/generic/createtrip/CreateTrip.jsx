@@ -79,7 +79,7 @@ export default function CreateTrip() {
       console.error("Błąd tworzenia podróży:", err);
       toast.error("Nie udało się dodać podróży.");
     }
-  };  
+  };
 
   return (
     <div className="create-trip-multistep">
