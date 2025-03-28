@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
+use App\Entity\User;
 use App\Entity\Trip;
 use App\Repository\TripRepository;
 use Doctrine\ORM\EntityManagerInterface;

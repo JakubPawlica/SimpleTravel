@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Entity\Trip;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -38,11 +39,13 @@ class User
         $this->trips = new ArrayCollection();
     }
 
+    #[Groups(['user:read', 'trip:read'])]
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    #[Groups(['user:read', 'trip:read'])]
     public function getName(): ?string
     {
         return $this->name;
@@ -55,6 +58,7 @@ class User
         return $this;
     }
 
+    #[Groups(['user:read', 'trip:read'])]
     public function getEmail(): ?string
     {
         return $this->email;

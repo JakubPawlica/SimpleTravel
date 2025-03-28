@@ -15,6 +15,7 @@ class Trip
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('trip:read')]
     private ?int $id = null;
 
     #[Groups('trip:read')]

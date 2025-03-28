@@ -78,6 +78,6 @@ class AuthController extends AbstractController
         }
 
         $user = $userRepository->find($userId);
-        return $this->json($user);
+        return $this->json($user, 200, [], ['groups' => 'user:read']);
     }
 }
