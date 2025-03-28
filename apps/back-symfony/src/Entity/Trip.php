@@ -38,7 +38,7 @@ class Trip
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'trips')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     #[Groups('trip:read')]
     private ?User $createdBy = null;
 

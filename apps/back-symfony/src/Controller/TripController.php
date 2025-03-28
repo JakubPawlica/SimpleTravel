@@ -48,6 +48,7 @@ class TripController extends AbstractController
         $trip->setStartDate(new \DateTime($data['start_date']));
         $trip->setEndDate(new \DateTime($data['end_date']));
         $trip->setDescription($data['description']);
+        $trip->setCreatedBy($this->getUser());
 
         $em->persist($trip);
         $em->flush();
@@ -87,6 +88,12 @@ class TripController extends AbstractController
 
         if (!$trip) {
             return $this->json(['error' => 'Trip not found'], 404);
+        }
+
+        $currentUser = $this->getUser();
+
+        if (!$currentUser || $trip->getCreatedBy()?->getId() !== $currentUser->getId()) {
+            return $this->json(['error' => 'Access denied'], 403);
         }
 
         $em->remove($trip);

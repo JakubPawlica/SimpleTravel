@@ -109,7 +109,6 @@ class User
     public function removeTrip(Trip $trip): static
     {
         if ($this->trips->removeElement($trip)) {
-            // set the owning side to null (unless already changed)
             if ($trip->getCreatedBy() === $this) {
                 $trip->setCreatedBy(null);
             }
