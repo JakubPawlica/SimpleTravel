@@ -1,0 +1,32 @@
+.trips-page {
+  padding: 50px;
+}
+
+.trips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.trip-card {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  padding: 20px;
+  transition: transform 0.2s ease;
+}
+
+.trip-card:hover {
+  transform: translateY(-4px);
+}
+
+.trip-card h3 {
+  margin-top: 0;
+  color: #007bff;
+}
+
+.trip-card p {
+  margin: 0.3rem 0;
+}

@@ -6,6 +6,9 @@ use App\Repository\TripRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use App\Entity\User;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 #[ORM\Entity(repositoryClass: TripRepository::class)]
 class Trip
 {
@@ -14,20 +17,30 @@ class Trip
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups('trip:read')]
     #[ORM\Column(length: 255)]
     private ?string $tripName = null;
 
+    #[Groups('trip:read')]
     #[ORM\Column(length: 255)]
     private ?string $destination = null;
 
+    #[Groups('trip:read')]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $startDate = null;
 
+    #[Groups('trip:read')]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $endDate = null;
 
+    #[Groups('trip:read')]
     #[ORM\Column(length: 255)]
     private ?string $description = null;
+
+    #[ORM\ManyToOne(inversedBy: 'trips')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups('trip:read')]
+    private ?User $createdBy = null;
 
     public function getId(): ?int
     {
@@ -93,4 +106,16 @@ class Trip
 
         return $this;
     }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $user): static
+    {
+        $this->createdBy = $user;
+        return $this;
+    }
+
 }

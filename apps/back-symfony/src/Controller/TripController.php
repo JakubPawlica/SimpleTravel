@@ -7,84 +7,91 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
+use App\Entity\Trip;
+use App\Repository\TripRepository;
+use Doctrine\ORM\EntityManagerInterface;
+
 class TripController extends AbstractController
 {
-    private array $trips = [
-        1 => ['id' => 1, 'name' => 'Wakacje w Paryzu', 'destination' => 'Francja', 'start_date' => '2024-07-10', 'end_date' => '2024-07-20'],
-        2 => ['id' => 2, 'name' => 'Wyjazd do Tokio', 'destination' => 'Japonia', 'start_date' => '2024-09-01', 'end_date' => '2024-09-15'],
-    ];
-
     #[Route('api/trips', name: 'get_trips', methods: ['GET'])]
-    public function getTrips(): JsonResponse
+    public function getTrips(TripRepository $tripRepository): JsonResponse
     {
-        return $this->json(array_values($this->trips), 200);
+        $trips = $tripRepository->findAll();
+        return $this->json($trips, 200, [], ['groups' => 'trip:read']);
     }
 
     #[Route('api/trips/{id}', name: 'get_trip_by_id', methods: ['GET'])]
-    public function getTripById(int $id): JsonResponse
+    public function getTripById(int $id, TripRepository $tripRepository): JsonResponse
     {
-        if(!array_key_exists($id, $this->trips)) {
+        $trip = $tripRepository->find($id);
+
+        if(!$trip) {
             return $this->json(['error' => 'Trip not found'], 404);
         }
 
-        return $this->json($this->trips[$id], 200);
+        return $this->json($trip, 200, [], ['groups' => 'trip:read']);
     }
 
     #[Route('api/trips', name: 'create_trip', methods: ['POST'])]
-    public function createTrip(Request $request): JsonResponse
+    public function createTrip(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
-        if(!isset($data['name'], $data['destination'], $data['start_date'], $data['end_date']))
+        if(!isset($data['tripName'], $data['destination'], $data['start_date'], $data['end_date'], $data['description']))
         {
             return $this->json(['error' => 'Invalid data'], 400);
         }
 
-        $newId = count($this->trips) + 1;
-        $newTrip = [
-            'id' => $newId,
-            'name' => $data['name'],
-            'destination' => $data['destination'],
-            'start_date' => $data['start_date'],
-            'end_date' => $data['end_date']
-        ];
-        $this->trips[$newId] = $newTrip;
+        $trip = new Trip();
+        $trip->setTripName($data['tripName']);
+        $trip->setDestination($data['destination']);
+        $trip->setStartDate(new \DateTime($data['start_date']));
+        $trip->setEndDate(new \DateTime($data['end_date']));
+        $trip->setDescription($data['description']);
 
-        return $this->json($newTrip, 201);
+        $em->persist($trip);
+        $em->flush();
+
+        return $this->json($trip, 201, [], ['groups' => 'trip:read']);
     }
 
     #[Route('api/trips/{id}', name: 'update_trip', methods: ['PUT'])]
-    public function updateTrip(int $id, Request $request): JsonResponse
+    public function updateTrip(int $id, Request $request, TripRepository $tripRepository, EntityManagerInterface $em): JsonResponse
     {
-        if(!isset($this->trips[$id])) {
+        $trip = $tripRepository->find($id);
+
+        if(!$trip) {
             return $this->json(['error' => 'Trip not found'], 404);
         }
 
-        $data = json_decode($request->getContent(), true);
-        if(!isset($data['name'], $data['destination'], $data['start_date'], $data['end_date']))
+        if (!isset($data['tripName'], $data['destination'], $data['startDate'], $data['endDate'], $data['description'])) 
         {
             return $this->json(['error' => 'Invalid data'], 400);
         }
 
-        $this->trips[$id] = [
-            'id' => $id,
-            'name' => $data['name'],
-            'destination' => $data['destination'],
-            'start_date' => $data['start_date'],
-            'end_date' => $data['end_date']
-        ];
+        $trip->setTripName($data['tripName']);
+        $trip->setDestination($data['destination']);
+        $trip->setStartDate(new \DateTime($data['start_date']));
+        $trip->setEndDate(new \DateTime($data['end_date']));
+        $trip->setDescription($data['description']);
 
-        return $this->json($this->trips[$id], 201);
+        $em->flush();
+
+        return $this->json($trip, 201, [], ['groups' => 'trip:read']);
     }
 
     #[Route('/api/trips/{id}', name: 'delete_trip', methods: ['DELETE'])]
-    public function deleteTrip(int $id): JsonResponse
+    public function deleteTrip(int $id, TripRepository $tripRepository, EntityManagerInterface $em): JsonResponse
     {
-        if (!isset($this->trips[$id])) {
+        $trip = $tripRepository->find($id);
+
+        if (!$trip) {
             return $this->json(['error' => 'Trip not found'], 404);
         }
 
-        unset($this->trips[$id]);
+        $em->remove($trip);
+        $em->flush();
+
         return $this->json(['message' => 'Trip deleted'], 204);
     }
 }

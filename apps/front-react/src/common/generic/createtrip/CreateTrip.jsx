@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { DateRange } from 'react-date-range';
 import { addDays } from 'date-fns';
 import { pl } from 'date-fns/locale';
+import { useNavigate } from "react-router-dom";
 import 'react-date-range/dist/styles.css'; 
 import 'react-date-range/dist/theme/default.css';
 import "./CreateTrip.css";
 import { toast } from "react-toastify";
 import { PiPlant } from "react-icons/pi";
+import { useTrip } from "../../../context/useTrip";
 
 export default function CreateTrip() {
   const [step, setStep] = useState(1);
@@ -15,8 +17,11 @@ export default function CreateTrip() {
     startDate: "",
     endDate: "",
     destination: "",
-    members: [],
+    description: "",
   });
+
+  const navigate = useNavigate();
+  const { refreshTrips } = useTrip();
   
   const handleChange = (e) => {
     setTrip({ ...trip, [e.target.name]: e.target.value });
@@ -24,11 +29,15 @@ export default function CreateTrip() {
 
   const next = () => {
     if (step === 1 && !trip.name.trim()) {
-      toast.warning("Wpisz nazwę podróży, zanim przejdziesz dalej!");
+      toast.warning("Uzupełnij nazwę podróży, zanim przejdziesz dalej!");
       return;
     }
     if (step === 3 && !trip.destination.trim()) {
-      toast.warning("Wpisz miejsce docelowe, zanim przejdziesz dalej!");
+      toast.warning("Uzupełnij miejsce docelowe, zanim przejdziesz dalej!");
+      return;
+    }
+    if (step === 4 && !trip.description.trim()) {
+      toast.warning("Uzupełnij opis podróży przed zatwierdzeniem!");
       return;
     }
   
@@ -36,11 +45,41 @@ export default function CreateTrip() {
   };
   const back = () => setStep((prev) => Math.max(prev - 1, 1));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    toast.success("🎉 Podróż zaplanowana!");
-    console.log(trip);
-  };
+
+    if (!trip.description.trim()) {
+      toast.warning("Uzupełnij opis podróży przed zatwierdzeniem!");
+      return;
+    }
+  
+    try {
+      const res = await fetch("http://localhost:8080/api/trips", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          tripName: trip.name,
+          start_date: trip.startDate,
+          end_date: trip.endDate,
+          destination: trip.destination,
+          description: trip.description,
+        }),
+      });
+  
+      if (!res.ok) {
+        throw new Error("Nie udało się utworzyć podróży");
+      }
+  
+      await refreshTrips();
+      toast.success("🎉 Podróż zaplanowana pomyślnie!");
+      navigate("/dashboard/trips");
+    
+    } catch (err) {
+      console.error("Błąd tworzenia podróży:", err);
+      toast.error("Nie udało się dodać podróży.");
+    }
+  };  
 
   return (
     <div className="create-trip-multistep">
@@ -103,10 +142,17 @@ export default function CreateTrip() {
           </div>
         )}
 
-        {/* Krok 4: Członkowie */}
+        {/* Krok 4: Opis */}
         {step === 4 && (
           <div className="create-trip-multistep__step">
-            <p>🔒 Funkcja zapraszania znajomych będzie dostępna wkrótce.</p>
+            <label>Dodaj krótki opis podróży:</label>
+            <textarea
+              name="description"
+              value={trip.description}
+              onChange={handleChange}
+              rows={4}
+              required
+            />
           </div>
         )}
 
@@ -145,7 +191,7 @@ function ProgressBar({ step }) {
     { id: 1, title: "Nazwa", desc: "Utwórz nazwę podróży" },
     { id: 2, title: "Data", desc: "Zaplanuj czas podróży" },
     { id: 3, title: "Miejsce", desc: "Wybierz destynację" },
-    { id: 4, title: "Członkowie", desc: "Zaproś znajomych" },
+    { id: 4, title: "Opis", desc: "Dodaj szczegóły" },
   ];
 
   return (

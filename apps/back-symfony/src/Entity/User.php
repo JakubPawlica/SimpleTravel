@@ -5,6 +5,10 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use App\Entity\Trip;
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 class User
@@ -25,6 +29,14 @@ class User
 
     #[ORM\Column(length: 255)]
     private ?string $sessionToken = null;
+
+    #[ORM\OneToMany(mappedBy: 'createdBy', targetEntity: Trip::class, orphanRemoval: true)]
+    private Collection $trips;
+
+    public function __construct()
+    {
+        $this->trips = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +87,33 @@ class User
     public function setSessionToken(string $sessionToken): static
     {
         $this->sessionToken = $sessionToken;
+
+        return $this;
+    }
+
+    public function getTrips(): Collection
+    {
+        return $this->trips;
+    }
+
+    public function addTrip(Trip $trip): static
+    {
+        if (!$this->trips->contains($trip)) {
+            $this->trips[] = $trip;
+            $trip->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrip(Trip $trip): static
+    {
+        if ($this->trips->removeElement($trip)) {
+            // set the owning side to null (unless already changed)
+            if ($trip->getCreatedBy() === $this) {
+                $trip->setCreatedBy(null);
+            }
+        }
 
         return $this;
     }
