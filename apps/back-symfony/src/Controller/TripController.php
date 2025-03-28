@@ -48,7 +48,18 @@ class TripController extends AbstractController
         $trip->setStartDate(new \DateTime($data['start_date']));
         $trip->setEndDate(new \DateTime($data['end_date']));
         $trip->setDescription($data['description']);
-        $trip->setCreatedBy($this->getUser());
+        
+        $userId = $request->getSession()->get('user_id');
+        if (!$userId) {
+            return $this->json(['error' => 'Not authenticated'], 401);
+        }
+
+        $user = $em->getRepository(User::class)->find($userId);
+        if (!$user) {
+            return $this->json(['error' => 'User not found'], 404);
+        }
+
+        $trip->setCreatedBy($user);
 
         $em->persist($trip);
         $em->flush();
@@ -64,6 +75,8 @@ class TripController extends AbstractController
         if(!$trip) {
             return $this->json(['error' => 'Trip not found'], 404);
         }
+
+        $data = json_decode($request->getContent(), true);
 
         if (!isset($data['tripName'], $data['destination'], $data['startDate'], $data['endDate'], $data['description'])) 
         {
@@ -82,7 +95,7 @@ class TripController extends AbstractController
     }
 
     #[Route('/api/trips/{id}', name: 'delete_trip', methods: ['DELETE'])]
-    public function deleteTrip(int $id, TripRepository $tripRepository, EntityManagerInterface $em): JsonResponse
+    public function deleteTrip(int $id, Request $request, TripRepository $tripRepository, EntityManagerInterface $em): JsonResponse
     {
         $trip = $tripRepository->find($id);
 
@@ -90,7 +103,8 @@ class TripController extends AbstractController
             return $this->json(['error' => 'Trip not found'], 404);
         }
 
-        $currentUser = $this->getUser();
+        $userId = $request->getSession()->get('user_id');
+        $currentUser = $em->getRepository(User::class)->find($userId);
 
         if (!$currentUser || $trip->getCreatedBy()?->getId() !== $currentUser->getId()) {
             return $this->json(['error' => 'Access denied'], 403);
