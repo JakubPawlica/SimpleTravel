@@ -9,6 +9,12 @@
   margin-top: 2rem;
 }
 
+.trip-card-icon {
+  font-size: 25px;
+  color: #007bff;
+  margin-right: 10px;
+}
+
 .trip-card {
   background: #ffffff;
   border: 1px solid #ddd;
@@ -16,6 +22,20 @@
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   padding: 20px;
   transition: transform 0.2s ease;
+}
+
+.trip-card > .trip-card-title {
+  margin-bottom: 30px;
+  font-size: 37px;
+}
+
+.trip-card > .trip-card-info {
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.trip-card > .trip-card-desc {
+  margin-top: 50px;
 }
 
 .trip-card:hover {

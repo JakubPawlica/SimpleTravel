@@ -4,6 +4,9 @@ import { useAuth } from '../../../context/useAuth';
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import { TbMoodSad } from "react-icons/tb";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { TbCalendarTime } from "react-icons/tb";
+import { FaLocationDot } from "react-icons/fa6";
 import './Trips.css';
 
 export default function Trips() {
@@ -13,6 +16,10 @@ export default function Trips() {
 
   const handleAddTrip = () => {
     navigate("/dashboard/plan-journey");
+  };
+
+  const formatDate = (isoDate) => {
+    return new Intl.DateTimeFormat('pl-PL').format(new Date(isoDate));
   };
 
   const handleDelete = async (tripId) => {
@@ -48,17 +55,17 @@ export default function Trips() {
         <div className="trip-card-grid">
           {trips.map(trip => (
             <div key={trip.id} className="trip-card">
-              <h3>{trip.tripName}</h3>
-              <p>📍 {trip.destination}</p>
-              <p>🗓 {trip.startDate} - {trip.endDate}</p>
-              <p>{trip.description}</p>
+              <h3 className="trip-card-title">{trip.tripName}</h3>
+              <p className="trip-card-info"><FaLocationDot className="trip-card-icon"/> {trip.destination}</p>
+              <p className="trip-card-info"><TbCalendarTime className="trip-card-icon"/> {formatDate(trip.startDate)} - {formatDate(trip.endDate)}</p>
+              <p className="trip-card-desc">Opis podróży: {trip.description}</p>
 
               {trip.createdBy?.id === user?.id && (
                 <button
                   className="delete-trip-btn"
                   onClick={() => handleDelete(trip.id)}
                 >
-                  🗑 Usuń
+                  <RiDeleteBin5Line /> Usuń
                 </button>
               )}
             </div>
