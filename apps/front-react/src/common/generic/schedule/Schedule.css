@@ -1,0 +1,37 @@
+.fc-event-title,
+.fc-event-main,
+.fc-event-main-frame {
+  color: #094067 !important;
+}
+
+/* Stylowanie tylko przycisków FullCalendar */
+.fc .fc-toolbar .fc-button {
+  background-color: #007BFF !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  transition: background-color 0.2s ease;
+}
+
+.fc .fc-toolbar .fc-button:hover {
+  background-color: #015dbe !important;
+}
+
+.fc .fc-toolbar .fc-button:disabled {
+  background-color: #28619e !important;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.fc .fc-toolbar .fc-button .fc-icon {
+  color: white !important; /* lub dowolny kolor */
+}
+
+
+
+
+
+

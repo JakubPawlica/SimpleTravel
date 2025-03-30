@@ -7,16 +7,18 @@ import IndexRoutes from "../routes/IndexRoutes";
 import "./App.css";
 import { AuthProvider } from "../context/AuthContext";
 import { TripProvider } from "../context/TripContext";
-
+import { ScheduleProvider } from "../context/ScheduleContext";
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <TripProvider>
-          <div id="app-content">
-            <IndexRoutes />
-            <ToastContainer autoClose={3000} position="top-right" toastClassName="toast-large"/>
-          </div>
+          <ScheduleProvider>
+            <div id="app-content">
+              <IndexRoutes />
+              <ToastContainer autoClose={3000} position="top-right" toastClassName="toast-large"/>
+            </div>
+          </ScheduleProvider>
         </TripProvider>
       </AuthProvider>
     </BrowserRouter>
