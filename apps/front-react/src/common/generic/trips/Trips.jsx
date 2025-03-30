@@ -54,7 +54,7 @@ export default function Trips() {
       ) : (
         <div className="trip-card-grid">
           {trips.map(trip => (
-            <div key={trip.id} className="trip-card">
+            <div key={trip.id} className="trip-card" onClick={() => navigate(`/dashboard/trips/${trip.id}`)}>
               <h3 className="trip-card-title">{trip.tripName}</h3>
               <p className="trip-card-info"><FaLocationDot className="trip-card-icon"/> {trip.destination}</p>
               <p className="trip-card-info"><TbCalendarTime className="trip-card-icon"/> {formatDate(trip.startDate)} - {formatDate(trip.endDate)}</p>

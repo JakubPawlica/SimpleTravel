@@ -11,6 +11,7 @@ import Profile from "../common/generic/profile/Profile";
 import CreateTrip from "../common/generic/createtrip/CreateTrip";
 import Schedule from "../common/generic/schedule/Schedule";
 import Trips from "../common/generic/trips/Trips";
+import TripDetails from "../common/generic/trips/TripDetails";
 import Billing from "../common/generic/billing/Billing";
 import { useAuth } from "../context/useAuth";
 
@@ -34,6 +35,7 @@ export default function IndexRoutes() {
           <Route path="plan-journey" element={<CreateTrip />} />
           <Route path="schedule" element={<Schedule />} />
           <Route path="trips" element={<Trips />} />
+          <Route path="trips/:id" element={<TripDetails />} />
           <Route path="billing" element={<Billing />} />
         </Route>
 
