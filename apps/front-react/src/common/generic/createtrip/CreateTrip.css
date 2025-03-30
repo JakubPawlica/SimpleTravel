@@ -10,7 +10,6 @@
   margin-bottom: 70px;
 }
 
-/* === Progress Bar === */
 .create-trip-multistep__progress {
   display: flex;
   justify-content: space-between;
