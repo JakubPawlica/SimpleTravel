@@ -55,7 +55,6 @@
   color: white;
 }
 
-/* === Form === */
 .create-trip-multistep__form {
   display: flex;
   flex-direction: column;

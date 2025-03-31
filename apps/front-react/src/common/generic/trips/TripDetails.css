@@ -1,0 +1,65 @@
+
+.trip-details-header {
+  height: 160px;
+  background-image: url('../../../assets/baner.png');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 10px 10px 0px 0px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.trip-details-main {
+  background: #fff;
+  max-width: 100%;
+  padding: 50px;
+  border-radius: 0px 0px 10px 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.trip-details-title {
+  align-self: center;
+  font-size: 3vw;
+}
+
+.trip-details-info {
+  padding: 40px;
+  margin-top: 50px;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  font-size: 1vw;
+  border: 2px solid #007bff;
+  border-radius: 20px;
+  background-color: #e6f2fe;
+}
+
+.trip-details-icon {
+  margin-right: 30px;
+  font-size: 2vw;
+  color: #0056b3;
+}
+
+.trip-details-buttons {
+  align-self: start;
+  margin-top: 150px;
+}
+
+.trip-details-buttons > button {
+  margin-right: 20px;
+  padding: 0.8rem 1.4rem;
+  font-size: 1vw;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.trip-details-buttons > button:hover {
+  background-color: #0056b3;
+}
