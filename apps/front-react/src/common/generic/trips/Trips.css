@@ -69,6 +69,12 @@
   background-color: #d9363e;
 }
 
+.blank-trip-page-btn-section {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
 .blank-trip-page {
   display: flex;
   flex-direction: column;
@@ -87,13 +93,45 @@
   cursor: pointer;
   transition: 0.2s ease; 
   margin-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .black-trip-page-button:hover {
   background-color: #0056b3;
 }
 
+.black-trip-page-button > p {
+  margin: 0;
+  color: white;
+}
+
 .blank-trip-page-icon {
   font-size: 50px;
+}
+
+.refresh-trips-btn {
+  margin-bottom: 2rem;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.refresh-trips-btn > p {
+  margin: 0;
+  color: white;
+}
+
+.refresh-trips-btn-icon {
+  font-size: 30px;
+  margin-right: 10px;
 }
 
