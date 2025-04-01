@@ -17,19 +17,38 @@ function Signup() {
     }
   }, [isAuthenticated, navigate]);
 
-  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ 
+    username: '',
+    email: '',
+    password: ''
+  });
+
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password.length < 3) {
-      toast.warning('Hasło musi mieć minimum 3 znaki');
-      setFormData({ password: '' });
+    if (!isValidEmail(formData.email)) {
+      setEmailError(true);
+      toast.warning('Podaj poprawny adres e-mail');
       return;
+    } else {
+      setEmailError(false);
+    }
+
+    if (formData.password.length < 3) {
+      setPasswordError(true);
+      toast.warning('Hasło musi mieć minimum 3 znaki');
+      return;
+    } else {
+      setPasswordError(false);
     }
 
     try {
@@ -67,8 +86,10 @@ function Signup() {
         <div className="home-logo"><span className="material-symbols-outlined">travel</span><span className="simple">Simple</span><span className="travel">Travel</span></div>
         <form onSubmit={handleSubmit}>
           <input name="username" placeholder="Nazwa użytkownika" value={formData.username} onChange={handleChange} required /><br /><br />
-          <input name="email" placeholder="Email" type="email" value={formData.email} onChange={handleChange} required /><br /><br />
-          <input name="password" placeholder="Hasło" type="password" value={formData.password} onChange={handleChange} required /><br /><br />
+          <input name="email" placeholder="Email" type="email" value={formData.email} onChange={handleChange} onBlur={() => setEmailError(!isValidEmail(formData.email))} required />
+          {emailError && (<p className="input-error-message">Niepoprawny adres e-mail</p>)}<br /><br />
+          <input name="password" placeholder="Hasło" type="password" value={formData.password} onChange={handleChange} onBlur={() => setPasswordError(formData.password.length < 3)} required />
+          {passwordError && (<p className="input-error-message">Hasło musi mieć minimum 3 znaki</p>)}<br /><br />
           <button type="submit">Zarejestruj się</button>
         </form>
         <br />

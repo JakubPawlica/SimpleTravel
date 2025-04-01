@@ -22,14 +22,6 @@
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
-/*.entry-form > h2 {
-  font-family: Poppins;
-  font-size: 30px;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  color: black;
-}*/
-
 .entry-form > form {
   margin-top: 40px;
 }
@@ -85,6 +77,18 @@
 
 .google-logo {
   width: 20px;
+}
+
+.input-error {
+  border: 2px solid #dc2626;
+  background-color: #fef2f2;
+}
+
+.input-error-message {
+  color: #dc2626;
+  font-size: 0.9rem;
+  margin-top: 4px;
+  margin-bottom: -35px;
 }
 
 /* TABLET and MOBILE */
