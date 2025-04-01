@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import LoadingSpinner from "../loading/LoadingSpinner";
 import { useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import { TbArrowBackUp } from "react-icons/tb";
@@ -41,7 +42,7 @@ export default function TripDetails() {
     fetchTrip();
   }, [id]);
 
-  if (loading) return <p>Ładowanie szczegółów podróży...</p>;
+  if (loading) return <LoadingSpinner message="Ładowanie szczegółów podróży..." />;
   if (!trip) return <p>Podróż nie została znaleziona.</p>;
 
   return (

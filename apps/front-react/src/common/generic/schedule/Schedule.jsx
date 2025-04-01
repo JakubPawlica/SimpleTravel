@@ -1,5 +1,6 @@
 import React from 'react';
 import './Schedule.css';
+import LoadingSpinner from "../loading/LoadingSpinner";
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import plLocale from '@fullcalendar/core/locales/pl';
@@ -17,7 +18,7 @@ export default function Schedule() {
   
   const { trips, loading } = useTrip();
 
-  if (loading) return <p>Ładowanie kalendarza...</p>;
+  if (loading) return <LoadingSpinner message="Ładowanie kalendarza..." />;
 
   const formattedEvents = trips.map(trip => ({
     title: trip.tripName,

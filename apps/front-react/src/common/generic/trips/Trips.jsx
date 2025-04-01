@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import LoadingSpinner from "../loading/LoadingSpinner";
 import { useTrip } from '../../../context/useTrip';
 import { useAuth } from '../../../context/useAuth';
 import { toast } from 'react-toastify';
@@ -54,7 +55,7 @@ export default function Trips() {
     }
   };
 
-  if (loading) return <p>Ładowanie podróży...</p>;
+  if (loading) return <LoadingSpinner message="Ładowanie podróży..." />;
 
   return (
     <div className="trips-page">

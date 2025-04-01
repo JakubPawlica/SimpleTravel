@@ -13,11 +13,12 @@ import Schedule from "../common/generic/schedule/Schedule";
 import Trips from "../common/generic/trips/Trips";
 import TripDetails from "../common/generic/trips/TripDetails";
 import Billing from "../common/generic/billing/Billing";
+import LoadingSpinner from "../common/generic/loading/LoadingSpinner";
 import { useAuth } from "../context/useAuth";
 
 export default function IndexRoutes() {
   const { isAuthenticated, loading } = useAuth();
-  if (loading) return <p>SimpleTravel - Ładowanie sesji...</p>;
+  if (loading) return <LoadingSpinner message="Ładowanie sesji użytkownika..." />;
 
   return (
     <div id="body-content">
