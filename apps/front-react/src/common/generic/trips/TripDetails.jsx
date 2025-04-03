@@ -139,17 +139,20 @@ export default function TripDetails() {
             <button onClick={handleGoToSchedule}><LuCalendarClock className="trip-details-button-calendar"/></button>
           </div>
           <div className="trip-details-admin-btns">
-            {trip && (
-              <button onClick={() => {
-                setEditedTrip({
-                  tripName: trip.tripName,
-                  destination: trip.destination,
-                  description: trip.description,
-                  startDate: trip.startDate,
-                  endDate: trip.endDate
-                });
-                setShowEditModal(true);
-              }} className="trip-details-edit-btn">
+            {trip.createdBy?.id === user?.id && (
+              <button
+                onClick={() => {
+                  setEditedTrip({
+                    tripName: trip.tripName,
+                    destination: trip.destination,
+                    description: trip.description,
+                    startDate: trip.startDate,
+                    endDate: trip.endDate
+                  });
+                  setShowEditModal(true);
+                }}
+                className="trip-details-edit-btn"
+              >
                 <FaEdit />
               </button>
             )}
