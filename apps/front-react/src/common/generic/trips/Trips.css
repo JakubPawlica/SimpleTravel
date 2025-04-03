@@ -53,22 +53,6 @@
   margin: 0.3rem 0;
 }
 
-.delete-trip-btn {
-  margin-top: 10px;
-  padding: 6px 12px;
-  background-color: #ff4d4f;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.2s ease;
-}
-
-.delete-trip-btn:hover {
-  background-color: #d9363e;
-}
-
 .blank-trip-page-btn-section {
   display: flex;
   flex-direction: row;

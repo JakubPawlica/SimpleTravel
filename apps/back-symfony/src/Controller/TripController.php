@@ -79,7 +79,7 @@ class TripController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
 
-        if (!isset($data['tripName'], $data['destination'], $data['startDate'], $data['endDate'], $data['description'])) 
+        if (!isset($data['tripName'], $data['destination'], $data['start_date'], $data['end_date'], $data['description'])) 
         {
             return $this->json(['error' => 'Invalid data'], 400);
         }

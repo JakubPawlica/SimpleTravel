@@ -5,7 +5,6 @@ import { useAuth } from '../../../context/useAuth';
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import { TbMoodSad } from "react-icons/tb";
-import { RiDeleteBin5Line } from "react-icons/ri";
 import { TbCalendarTime } from "react-icons/tb";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoRefresh } from "react-icons/io5";
@@ -36,25 +35,6 @@ export default function Trips() {
     return new Intl.DateTimeFormat('pl-PL').format(new Date(isoDate));
   };
 
-  const handleDelete = async (tripId) => {
-    try {
-      const res = await fetch(`http://localhost:8080/api/trips/${tripId}`, {
-        method: 'DELETE',
-        credentials: 'include',
-      });
-
-      if (!res.ok) {
-        throw new Error('Usuwanie nie powiodło się');
-      }
-
-      toast.success('🗑️ Podróż została usunięta');
-      refreshTrips();
-    } catch (err) {
-      console.error('Błąd przy usuwaniu:', err);
-      toast.error('Nie udało się usunąć podróży.');
-    }
-  };
-
   if (loading) return <LoadingSpinner message="Ładowanie podróży..." />;
 
   return (
@@ -81,15 +61,6 @@ export default function Trips() {
               <p className="trip-card-info"><FaLocationDot className="trip-card-icon"/> {trip.destination}</p>
               <p className="trip-card-info"><TbCalendarTime className="trip-card-icon"/> {formatDate(trip.startDate)} - {formatDate(trip.endDate)}</p>
               <p className="trip-card-desc">Opis podróży: {trip.description}</p>
-
-              {trip.createdBy?.id === user?.id && (
-                <button
-                  className="delete-trip-btn"
-                  onClick={() => handleDelete(trip.id)}
-                >
-                  <RiDeleteBin5Line /> Usuń
-                </button>
-              )}
             </div>
           ))}
         </div>
