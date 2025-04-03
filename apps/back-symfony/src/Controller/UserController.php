@@ -71,7 +71,7 @@ class UserController extends AbstractController
 
         $em->flush();
 
-        return $this->json($user, 200);
+        return $this->json($user, 200, [], ['groups' => 'user:read']);
     }
 
     #[Route('/api/users/{id}', name: 'delete_user', methods: ['DELETE'])]
