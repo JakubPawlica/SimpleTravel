@@ -3,6 +3,7 @@ import { useAuth } from "../../../context/useAuth";
 import { FaRegUser } from "react-icons/fa";
 import UserPP from "../../../assets/user_pp.jpg"
 import { toast } from 'react-toastify';
+import { FaEdit } from "react-icons/fa";
 import "./Profile.css";
 
 export default function Profile() {
@@ -56,37 +57,48 @@ export default function Profile() {
 
   return (
       <div className="profile-card">
+      <h2>Profil użytkownika</h2>
     {isEditing ? (
-      <>
-        <label>
-          Imię:
-          <input
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Email:
-          <input
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </label>
-        <div className="profile-buttons">
-          <button onClick={handleSave}>Zapisz</button>
-          <button onClick={handleCancel}>Anuluj</button>
+      <div className="profile-container">
+        <div className="profile-container-picture">
+          <img src={ UserPP } alt="profile_picture" className="profile-container-pp"/>
         </div>
-      </>
+        <div className="profile-container-info">
+          <label>
+            Imię:
+            <input
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+          </label>
+          <label>
+            Email:
+            <input
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </label>
+          <div className="profile-buttons">
+            <button onClick={handleSave}>Zapisz</button>
+            <button onClick={handleCancel}>Anuluj</button>
+          </div>
+        </div> 
+      </div>
     ) : (
-      <>
-        <p><strong>Imię:</strong> {user.name}</p>
-        <p><strong>Email:</strong> {user.email}</p>
-        <button onClick={() => setIsEditing(true)} className="edit-profile-btn">
-          ✏️ Edytuj profil
-        </button>
-      </>
+      <div className = "profile-container">
+        <div className="profile-container-picture">
+          <img src={ UserPP } alt="profile_picture" className="profile-container-pp"/>
+        </div>
+        <div className="profile-container-info">
+          <p><strong>Imię:</strong> {user.name}</p>
+          <p><strong>Email:</strong> {user.email}</p>
+          <button onClick={() => setIsEditing(true)} className="edit-profile-btn">
+          <FaEdit /> Edytuj profil
+          </button>
+        </div>  
+      </div>
     )}
   </div>
   );
