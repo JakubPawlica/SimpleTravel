@@ -22,3 +22,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+when@test:
+    services:
+        Symfony\Component\HttpFoundation\Session\SessionInterface:
+            public: true
+            factory: ['@session.factory', 'createSession']
