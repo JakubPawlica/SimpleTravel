@@ -32,6 +32,45 @@ class TripServiceTest extends TestCase
         $this->tripService = new TripService($this->em, $this->tripRepository);
     }
 
+    public function testGetAllTripsSuccessfully(): void
+    {
+        $trips = [new Trip(), new Trip()];
+
+        $this->tripRepository
+            ->method('findAll')
+            ->willReturn($trips);
+
+        $result = $this->tripService->getAllTrips();
+
+        $this->assertIsArray($result);
+        $this->assertCount(2, $result);
+        $this->assertContainsOnlyInstancesOf(Trip::class, $result);
+    }
+
+    public function testGetTripByIdSuccessfully(): void
+    {
+        $trip = new Trip();
+
+        $this->tripRepository
+            ->method('find')
+            ->with(1)
+            ->willReturn($trip);
+
+        $result = $this->tripService->getTripById(1);
+        $this->assertInstanceOf(Trip::class, $result);
+    }
+
+    public function testGetTripByIdFailed(): void
+    {
+        $this->tripRepository
+            ->method('find')
+            ->with(999)
+            ->willReturn(null);
+
+        $result = $this->tripService->getTripById(999);
+        $this->assertNull($result);
+    }
+
     public function testCreateTripSuccessfully(): void
     {
         $data = [
