@@ -1,14 +1,16 @@
 nelmio_api_doc:
     documentation:
         info:
-            title: 'Trip API'
-            description: 'Dokumentacja backendu Symfony z endpointami uwierzytelniania i zarządzania wycieczkami.'
-            version: '1.0.0'
+            title: 'SimpleTravel API'
+            description: '🌍 Dokumentacja backendu Symfony z endpointami aplikacji do zarządzania podróżą'
+            version: '1.1'
         tags:
-            - name: 'Auth'
-              description: 'Rejestracja, logowanie, użytkownik zalogowany'
-            - name: 'Trip'
-              description: 'Tworzenie, edycja, pobieranie i usuwanie wycieczek'
+            - name: '🔒 Auth'
+              description: 'Rejestracja, logowanie, użytkownik zalogowany, wylogowywanie.'
+            - name: '✈️ Trip'
+              description: 'Tworzenie, edycja, pobieranie i usuwanie wycieczek.'
+            - name: '🛠️ In progress'
+              description: 'Zaplanowane endpointy, które nie mają jeszcze zastosowania w aplikacji.'
 
     areas:
         default:

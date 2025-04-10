@@ -10,6 +10,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ScheduleRepository;
 use Symfony\Component\Serializer\SerializerInterface;
 
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
+
+/**
+* @OA\Tag(name="🛠️ In progress")
+*/
 class ScheduleController extends AbstractController
 {
     #[Route('/api/schedule', name: 'api_schedule_list', methods: ['GET'])]

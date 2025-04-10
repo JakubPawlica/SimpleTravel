@@ -7,6 +7,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
+
+/**
+* @OA\Tag(name="🛠️ In progress")
+*/
 class GroupController extends AbstractController
 {
     private array $groups = [

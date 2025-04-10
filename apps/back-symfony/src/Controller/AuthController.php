@@ -18,12 +18,36 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
+use OpenApi\Annotations as OA;
+
+/**
+* @OA\Tag(name="🔒 Auth")
+*/
 class AuthController extends AbstractController
 {
     public function __construct(
         private AuthService $authService
     ) {}
 
+    /**
+     * @OA\Post(
+     *     path="/api/register",
+     *     summary="Rejestracja nowego użytkownika",
+     *     tags={"🔒 Auth"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name", "email", "password"},
+     *             @OA\Property(property="name", type="string", example="Jan Kowalski"),
+     *             @OA\Property(property="email", type="string", format="email", example="jan@example.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="tajnehaslo123")
+     *         )
+     *     ),
+     *     @OA\Response(response=201, description="Użytkownik zarejestrowany"),
+     *     @OA\Response(response=400, description="Brak danych lub zły format"),
+     *     @OA\Response(response=409, description="Email już w użyciu")
+     * )
+     */
     #[Route('/api/register', name: 'register', methods: ['POST'])]
     public function register(Request $request): JsonResponse
     {
@@ -37,6 +61,24 @@ class AuthController extends AbstractController
         return $this->json(['message' => 'User registered'], 201);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/login",
+     *     summary="Logowanie użytkownika",
+     *     tags={"🔒 Auth"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email", "password"},
+     *             @OA\Property(property="email", type="string", format="email", example="jan@example.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="tajnehaslo123")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Zalogowano"),
+     *     @OA\Response(response=400, description="Nieprawidłowe dane wejściowe"),
+     *     @OA\Response(response=401, description="Błędne dane logowania")
+     * )
+     */
     #[Route('/api/login', name: 'login', methods: ['POST'])]
     public function login(Request $request, SessionInterface $session, UserRepository $userRepository): JsonResponse
     {
@@ -55,6 +97,14 @@ class AuthController extends AbstractController
         return $this->json(['message' => 'Logged in']);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/logout",
+     *     summary="Wylogowanie użytkownika",
+     *     tags={"🔒 Auth"},
+     *     @OA\Response(response=200, description="Wylogowano")
+     * )
+     */
     #[Route('/api/logout', name: 'logout', methods: ['POST'])]
     public function logout(SessionInterface $session): JsonResponse
     {
@@ -62,6 +112,24 @@ class AuthController extends AbstractController
         return $this->json(['message' => 'Logged out']);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/me",
+     *     summary="Pobierz dane zalogowanego użytkownika",
+     *     tags={"🔒 Auth"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Dane użytkownika",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="id", type="integer", example=1),
+     *             @OA\Property(property="name", type="string", example="Jan Kowalski"),
+     *             @OA\Property(property="email", type="string", example="jan@example.com")
+     *         )
+     *     ),
+     *     @OA\Response(response=401, description="Nie zalogowano")
+     * )
+     */
     #[Route('/api/me', name: 'me', methods: ['GET'])]
     public function me(SessionInterface $session): JsonResponse
     {

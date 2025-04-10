@@ -11,6 +11,12 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
+
+/**
+* @OA\Tag(name="🛠️ In progress")
+*/
 class UserController extends AbstractController
 {
     #[Route('/api/users', name: 'get_users', methods: ['GET'])]
