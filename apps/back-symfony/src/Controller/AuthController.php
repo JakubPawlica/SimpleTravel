@@ -10,33 +10,22 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 use App\Entity\User;
+use App\Service\AuthService;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AuthController extends AbstractController
 {
+    public function __construct(
+        private AuthService $authService
+    ) {}
+
     #[Route('/api/register', name: 'register', methods: ['POST'])]
-    public function register(Request $request, EntityManagerInterface $em, UserRepository $userRepository): JsonResponse
+    public function register(Request $request): JsonResponse
     {
         try {
             $data = json_decode($request->getContent(), true);
-            if (!isset($data['name'], $data['email'], $data['password'])) {
-                return $this->json(['error' => 'Invalid data'], 400);
-            }
-    
-            if ($userRepository->findOneBy(['email' => $data['email']])) {
-                return $this->json(['error' => 'Podany email jest już zajęty'], 409);
-            }
-    
-            $user = new User();
-            $user->setName($data['name']);
-            $user->setEmail($data['email']);
-            $user->setPasswordHash(password_hash($data['password'], PASSWORD_DEFAULT));
-            $user->setSessionToken(bin2hex(random_bytes(32)));
-    
-            $em->persist($user);
-            $em->flush();
-    
+            $user = $this->AuthService->register($data);
             return $this->json(['message' => 'User registered'], 201);
         } catch (\Throwable $e) {
             return $this->json(['error' => $e->getMessage()], 500);
@@ -51,8 +40,8 @@ class AuthController extends AbstractController
             return $this->json(['error' => 'Invalid credentials'], 400);
         }
 
-        $user = $userRepository->findOneBy(['email' => $data['email']]);
-        if (!$user || !password_verify($data['password'], $user->getPasswordHash())) {
+        $user = $this->authService->validateCredentials($data['email'], $data['password']);
+        if (!$user) {
             return $this->json(['error' => 'Niepoprawne dane logowania'], 401);
         }
 
@@ -69,7 +58,7 @@ class AuthController extends AbstractController
     }
 
     #[Route('/api/me', name: 'me', methods: ['GET'])]
-    public function me(SessionInterface $session, UserRepository $userRepository): JsonResponse
+    public function me(SessionInterface $session): JsonResponse
     {
         $userId = $session->get('user_id');
 
@@ -77,7 +66,7 @@ class AuthController extends AbstractController
             return $this->json(['error' => 'Not logged in'], 401);
         }
 
-        $user = $userRepository->find($userId);
+        $user = $this->AuthService->getUserById($userId);
         return $this->json($user, 200, [], ['groups' => 'user:read']);
     }
 }
