@@ -14,6 +14,10 @@ use App\Service\AuthService;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+
 class AuthController extends AbstractController
 {
     public function __construct(
@@ -23,13 +27,14 @@ class AuthController extends AbstractController
     #[Route('/api/register', name: 'register', methods: ['POST'])]
     public function register(Request $request): JsonResponse
     {
-        try {
-            $data = json_decode($request->getContent(), true);
-            $user = $this->authService->register($data);
-            return $this->json(['message' => 'User registered'], 201);
-        } catch (\Throwable $e) {
-            return $this->json(['error' => $e->getMessage()], 500);
+        $data = json_decode($request->getContent(), true);
+
+        if (!isset($data['name'], $data['email'], $data['password'])) {
+            throw new BadRequestHttpException('Invalid registration data');
         }
+
+        $this->authService->register($data);
+        return $this->json(['message' => 'User registered'], 201);
     }
 
     #[Route('/api/login', name: 'login', methods: ['POST'])]
@@ -37,12 +42,12 @@ class AuthController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         if (!isset($data['email'], $data['password'])) {
-            return $this->json(['error' => 'Invalid credentials'], 400);
+            throw new BadRequestHttpException('Invalid credentials');
         }
 
         $user = $this->authService->validateCredentials($data['email'], $data['password']);
         if (!$user) {
-            return $this->json(['error' => 'Niepoprawne dane logowania'], 401);
+            throw new UnauthorizedHttpException('', 'Niepoprawne dane logowania');
         }
 
         $session->set('user_id', $user->getId());
@@ -63,10 +68,15 @@ class AuthController extends AbstractController
         $userId = $session->get('user_id');
 
         if (!$userId) {
-            return $this->json(['error' => 'Not logged in'], 401);
+            throw new UnauthorizedHttpException('', 'Not logged in');
         }
 
         $user = $this->authService->getUserById($userId);
+
+        if (!$user) {
+            throw new NotFoundHttpException('User not found');
+        }
+
         return $this->json($user, 200, [], ['groups' => 'user:read']);
     }
 }
