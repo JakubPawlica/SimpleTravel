@@ -25,7 +25,7 @@ class AuthController extends AbstractController
     {
         try {
             $data = json_decode($request->getContent(), true);
-            $user = $this->AuthService->register($data);
+            $user = $this->authService->register($data);
             return $this->json(['message' => 'User registered'], 201);
         } catch (\Throwable $e) {
             return $this->json(['error' => $e->getMessage()], 500);
@@ -66,7 +66,7 @@ class AuthController extends AbstractController
             return $this->json(['error' => 'Not logged in'], 401);
         }
 
-        $user = $this->AuthService->getUserById($userId);
+        $user = $this->authService->getUserById($userId);
         return $this->json($user, 200, [], ['groups' => 'user:read']);
     }
 }
