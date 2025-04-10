@@ -55,7 +55,7 @@ class TripController extends AbstractController
             return $this->json(['error' => 'Not authenticated'], 401);
         }
 
-        $user = $em->getRepository(User::class)->find($userId);
+        $user = $this->userRepository->find($userId);
         if (!$user) {
             return $this->json(['error' => 'User not found'], 404);
         }

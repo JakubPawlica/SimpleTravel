@@ -13,6 +13,7 @@
         <ini name="error_reporting" value="-1" />
         <env name="APP_ENV" value="test" force="true" />
         <env name="KERNEL_CLASS" value="App\Kernel" />
+        <env name="DAMADoctrineTestBundle.PHPUNIT" value="true"/>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled" />
         <server name="SHELL_VERBOSITY" value="-1" />
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
@@ -36,9 +37,10 @@
     </listeners>
 
     <!-- Run `composer require symfony/panther` before enabling this extension -->
-    <!--
+    
     <extensions>
-        <extension class="Symfony\Component\Panther\ServerExtension" />
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
+        <!--<extension class="Symfony\Component\Panther\ServerExtension" />-->
     </extensions>
-    -->
+
 </phpunit>

@@ -3,13 +3,13 @@
 namespace App\Tests\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Tests\DatabaseTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Entity\User;
 use App\Entity\Trip;
 
-class TripControllerTest extends WebTestCase
+class TripControllerTest extends DatabaseTestCase
 {
     private $entityManager;
     private $client;
@@ -17,8 +17,8 @@ class TripControllerTest extends WebTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
         $this->client = static::createClient();
-
         $this->entityManager = static::getContainer()->get('doctrine')->getManager();
 
         $user = new User();
@@ -197,26 +197,4 @@ class TripControllerTest extends WebTestCase
         $this->client->request('DELETE', '/api/trips/99999');
         $this->assertResponseStatusCodeSame(404);
     }
-
-    protected function tearDown(): void
-    {
-        if ($this->testUser) {
-            $trips = $this->entityManager
-                ->getRepository(\App\Entity\Trip::class)
-                ->findBy(['createdBy' => $this->testUser]);
-
-            foreach ($trips as $trip) {
-                $this->entityManager->remove($trip);
-            }
-
-            $this->entityManager->remove($this->testUser);
-            $this->entityManager->flush();
-        }
-
-        parent::tearDown();
-        $this->entityManager->close();
-        $this->entityManager = null;
-    }
-
-
 }

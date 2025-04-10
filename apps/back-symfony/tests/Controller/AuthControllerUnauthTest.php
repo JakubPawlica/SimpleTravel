@@ -2,9 +2,9 @@
 
 namespace App\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Tests\DatabaseTestCase;
 
-class AuthControllerUnauthenticatedTest extends WebTestCase
+class AuthControllerUnauthTest extends DatabaseTestCase
 {
     public function testMeReturns401WithoutSession(): void
     {

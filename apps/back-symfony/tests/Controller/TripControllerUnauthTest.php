@@ -2,9 +2,9 @@
 
 namespace App\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Tests\DatabaseTestCase;
 
-class TripControllerUnauthenticatedTest extends WebTestCase
+class TripControllerUnauthTest extends DatabaseTestCase
 {
     public function testCreateTripReturns401WithoutSession(): void
     {

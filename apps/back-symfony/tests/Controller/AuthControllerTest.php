@@ -2,12 +2,12 @@
 
 namespace App\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Tests\DatabaseTestCase;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\BrowserKit\Cookie;
 use App\Entity\User;
 
-class AuthControllerTest extends WebTestCase
+class AuthControllerTest extends DatabaseTestCase
 {
     private $client;
     private $entityManager;
@@ -15,6 +15,7 @@ class AuthControllerTest extends WebTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
         $this->client = static::createClient();
         $container = static::getContainer();
         $this->entityManager = $container->get('doctrine')->getManager();
@@ -102,17 +103,5 @@ class AuthControllerTest extends WebTestCase
     {
         $this->client->request('GET', '/api/me');
         $this->assertResponseStatusCodeSame(200);
-    }
-
-    protected function tearDown(): void
-    {
-        if ($this->testUser) {
-            $this->entityManager->remove($this->testUser);
-            $this->entityManager->flush();
-        }
-
-        parent::tearDown();
-        $this->entityManager->close();
-        $this->entityManager = null;
     }
 }
