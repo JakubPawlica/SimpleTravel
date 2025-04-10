@@ -32,7 +32,7 @@ class TripServiceTest extends TestCase
         $this->tripService = new TripService($this->em, $this->tripRepository);
     }
 
-    public function testGetAllTripsSuccessfully(): void
+    public function testGetAllTripsSuccess(): void
     {
         $trips = [new Trip(), new Trip()];
 
@@ -47,7 +47,7 @@ class TripServiceTest extends TestCase
         $this->assertContainsOnlyInstancesOf(Trip::class, $result);
     }
 
-    public function testGetTripByIdSuccessfully(): void
+    public function testGetTripByIdSuccess(): void
     {
         $trip = new Trip();
 
@@ -60,7 +60,7 @@ class TripServiceTest extends TestCase
         $this->assertInstanceOf(Trip::class, $result);
     }
 
-    public function testGetTripByIdFailed(): void
+    public function testGetTripByIdFail(): void
     {
         $this->tripRepository
             ->method('find')
@@ -71,7 +71,7 @@ class TripServiceTest extends TestCase
         $this->assertNull($result);
     }
 
-    public function testCreateTripSuccessfully(): void
+    public function testCreateTripSuccess(): void
     {
         $data = [
             'tripName' => 'Test Trip',
@@ -97,7 +97,7 @@ class TripServiceTest extends TestCase
         $this->assertSame('Test Trip', $trip->getTripName());
     }
 
-    public function testUpdateTripSuccessfully(): void
+    public function testUpdateTripSuccess(): void
     {
         $trip = new Trip();
         $trip->setTripName('Stara nazwa');
@@ -127,7 +127,7 @@ class TripServiceTest extends TestCase
         $this->assertSame('Opis nowej wycieczki', $updatedTrip->getDescription());
     }
 
-    public function testDeleteTripSuccessfully(): void
+    public function testDeleteTripSuccess(): void
     {
         $trip = new Trip();
 
