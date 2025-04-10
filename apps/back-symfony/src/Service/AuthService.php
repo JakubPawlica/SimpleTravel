@@ -6,6 +6,8 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
+
 class AuthService
 {
     public function __construct(
@@ -20,7 +22,7 @@ class AuthService
         }
 
         if ($this->userRepository->findOneBy(['email' => $data['email']])) {
-            throw new \RuntimeException('Email already in use');
+            throw new ConflictHttpException('Email jest już zajęty');
         }
 
         $user = new User();

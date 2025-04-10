@@ -66,7 +66,7 @@ class AuthControllerTest extends DatabaseTestCase
             'name' => 'Incomplete User'
         ]));
 
-        $this->assertResponseStatusCodeSame(500);
+        $this->assertResponseStatusCodeSame(400);
     }
 
     public function testLoginReturns200(): void
