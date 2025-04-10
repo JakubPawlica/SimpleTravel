@@ -11,6 +11,11 @@ use App\Entity\User;
 use App\Service\TripService;
 use App\Repository\UserRepository;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+
 class TripController extends AbstractController
 {
     public function __construct(
@@ -35,7 +40,7 @@ class TripController extends AbstractController
         $trip = $this->tripService->getTripById($id);
 
         if(!$trip) {
-            return $this->json(['error' => 'Trip not found'], 404);
+            throw new NotFoundHttpException('Trip not found');
         }
         return $this->json($trip, 200, [], ['groups' => 'trip:read']);
     }
@@ -47,17 +52,17 @@ class TripController extends AbstractController
 
         if(!isset($data['tripName'], $data['destination'], $data['start_date'], $data['end_date'], $data['description']))
         {
-            return $this->json(['error' => 'Invalid data'], 400);
+            throw new BadRequestHttpException('Invalid data');
         }
         
         $userId = $request->getSession()->get('user_id');
         if (!$userId) {
-            return $this->json(['error' => 'Not authenticated'], 401);
+            throw new UnauthorizedHttpException('', 'Not authenticated');
         }
 
         $user = $this->userRepository->find($userId);
         if (!$user) {
-            return $this->json(['error' => 'User not found'], 404);
+            throw new NotFoundHttpException('User not found');
         }
 
         $trip = $this->tripService->createTrip($data, $user);
@@ -70,14 +75,14 @@ class TripController extends AbstractController
         $trip = $this->tripService->getTripById($id);
 
         if(!$trip) {
-            return $this->json(['error' => 'Trip not found'], 404);
+            throw new NotFoundHttpException('Trip not found');
         }
 
         $data = json_decode($request->getContent(), true);
 
         if (!isset($data['tripName'], $data['destination'], $data['start_date'], $data['end_date'], $data['description'])) 
         {
-            return $this->json(['error' => 'Invalid data'], 400);
+            throw new BadRequestHttpException('Invalid data');
         }
 
         $updatedTrip = $this->tripService->updateTrip($trip, $data);
@@ -90,14 +95,14 @@ class TripController extends AbstractController
         $trip = $this->tripService->getTripById($id);
 
         if (!$trip) {
-            return $this->json(['error' => 'Trip not found'], 404);
+            throw new NotFoundHttpException('Trip not found');
         }
 
         $userId = $request->getSession()->get('user_id');
         $user = $this->userRepository->find($userId);
 
         if (!$user || $trip->getCreatedBy()?->getId() !== $user->getId()) {
-            return $this->json(['error' => 'Access denied'], 403);
+            throw new AccessDeniedHttpException('Access denied');
         }
 
         $this->tripService->deleteTrip($trip);
